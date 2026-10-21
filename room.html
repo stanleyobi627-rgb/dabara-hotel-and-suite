@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Room details — Dabara Hotel and Suite</title>
+    <meta
+      name="description"
+      content="See the full details, amenities and live availability for this room at Dabara Hotel and Suite, Awka."
+    />
+    <meta name="theme-color" content="#faf6ef" />
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+
+    <main id="main">
+      <section class="page-head">
+        <div class="container">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="index.html">Home</a> <span>/</span> <a href="rooms.html">Rooms</a>
+            <span>/</span> <span id="crumb-name">Room</span>
+          </nav>
+          <h1 id="room-name">Room</h1>
+          <p id="room-summary"></p>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="container">
+          <div class="room-hero">
+            <div>
+              <div class="gallery">
+                <div class="gallery__main">
+                  <img id="gallery-main" src="images/room-standard.svg" alt="" />
+                </div>
+                <div class="gallery__thumbs" id="gallery-thumbs"></div>
+              </div>
+
+              <div class="panel mt-3">
+                <h2 class="panel__title" id="detail-title">About this room</h2>
+                <p class="muted" id="detail-description"></p>
+                <hr class="divider" />
+                <h3 class="panel__title">Room specification</h3>
+                <ul class="spec-list" id="spec-list"></ul>
+                <hr class="divider" />
+                <h3 class="panel__title">What's included</h3>
+                <div class="amenity-grid" id="amenity-grid"></div>
+              </div>
+
+              <div class="panel mt-3">
+                <h2 class="panel__title">Good to know</h2>
+                <div id="room-faq"></div>
+              </div>
+            </div>
+
+            <aside class="booking-card" id="booking-card">
+              <div class="booking-card__price">
+                <b id="rate">—</b>
+                <span>per night · taxes at checkout</span>
+              </div>
+              <form id="reserve-form">
+                <label class="field">
+                  <span class="field__label">Check in</span>
+                  <input class="input" type="date" id="checkIn" required />
+                </label>
+                <label class="field">
+                  <span class="field__label">Check out</span>
+                  <input class="input" type="date" id="checkOut" required />
+                </label>
+                <div class="field-row">
+                  <label class="field">
+                    <span class="field__label">Guests</span>
+                    <select class="select" id="guests"></select>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Rooms</span>
+                    <select class="select" id="quantity">
+                      <option value="1">1 room</option>
+                      <option value="2">2 rooms</option>
+                      <option value="3">3 rooms</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="summary mb-2" id="estimate"></div>
+                <button class="btn btn--accent btn--block" type="submit" id="reserve-btn">
+                  Continue to booking
+                </button>
+                <p class="text-xs muted text-center mt-2 mb-0">
+                  No payment is taken yet. Free cancellation up to 48 hours before check-in.
+                </p>
+              </form>
+            </aside>
+          </div>
+
+          <div class="mt-4" id="related"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/room.js"></script>
+  </body>
+</html>

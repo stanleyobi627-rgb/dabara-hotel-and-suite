@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dabara Hotel and Suite — Boutique hotel in Awka, Anambra State</title>
+    <meta
+      name="description"
+      content="Dabara Hotel and Suite is a modern boutique hotel in Awka, Anambra State. Book studios, deluxe rooms and suites online with instant confirmation."
+    />
+    <meta name="theme-color" content="#faf6ef" />
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="container hero__inner">
+          <div>
+            <span class="hero__badge" id="hero-badge">4-star boutique stay in Awka</span>
+            <h1>Rest well at <em>Dabara</em>, where the city slows down.</h1>
+            <p class="hero__lede">
+              Twenty-four private rooms and suites in the heart of Awka — warm Nigerian
+              hospitality, rooftop views over Anambra State, and a booking that takes less than
+              two minutes.
+            </p>
+            <div class="row mt-3">
+              <a class="btn btn--accent btn--lg" href="rooms.html">Explore our rooms</a>
+              <a class="btn btn--ghost btn--lg" href="booking.html">Reserve a stay</a>
+            </div>
+            <div class="hero__stats" id="hero-stats"></div>
+          </div>
+          <div class="hero__art">
+            <img src="images/hero.svg" alt="Illustration of the Dabara Hotel and Suite lobby" />
+          </div>
+        </div>
+      </section>
+
+      <section class="container">
+        <form class="searchbar" id="search-form">
+          <label class="field">
+            <span class="field__label">Check in</span>
+            <input class="input" type="date" name="checkIn" id="checkIn" required />
+          </label>
+          <label class="field">
+            <span class="field__label">Check out</span>
+            <input class="input" type="date" name="checkOut" id="checkOut" required />
+          </label>
+          <label class="field">
+            <span class="field__label">Guests</span>
+            <select class="select" name="guests" id="guests">
+              <option value="1">1 guest</option>
+              <option value="2" selected>2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+              <option value="5">5 guests</option>
+              <option value="6">6 guests</option>
+            </select>
+          </label>
+          <button class="btn searchbar__submit" type="submit">Check availability</button>
+        </form>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section__head section__head--center">
+            <span class="eyebrow">Why Dabara</span>
+            <h2>Everything you need, nothing you don't</h2>
+            <p class="lede">
+              Seven room types, a rooftop pool, a full-service spa and a kitchen that serves
+              local Anambra produce — all under one roof in Independence Layout.
+            </p>
+          </div>
+          <div class="grid grid--4" id="feature-grid"></div>
+        </div>
+      </section>
+
+      <section class="section section--alt">
+        <div class="container">
+          <div class="section__head section__head--center">
+            <span class="eyebrow">Rooms &amp; suites</span>
+            <h2>Find the room that fits your stay</h2>
+            <p class="lede">
+              Every room is en-suite, air conditioned and comes with high-speed Wi-Fi, premium
+              linen and a walk-in shower.
+            </p>
+          </div>
+          <div class="grid grid--3" id="featured-rooms"></div>
+          <div class="row row--end mt-3">
+            <a class="link-arrow" href="rooms.html">See all 7 room types</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section__head section__head--center">
+            <span class="eyebrow">Hotel services</span>
+            <h2>More than a bed for the night</h2>
+          </div>
+          <div class="grid grid--2" id="service-preview"></div>
+        </div>
+      </section>
+
+      <section class="section section--alt">
+        <div class="container">
+          <div class="section__head section__head--center">
+            <span class="eyebrow">Guest reviews</span>
+            <h2>Loved by travellers across Nigeria</h2>
+          </div>
+          <div class="grid grid--3" id="review-grid"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container container--narrow">
+          <div class="section__head section__head--center">
+            <span class="eyebrow">Good to know</span>
+            <h2>Questions before you book?</h2>
+          </div>
+          <div id="faq-list"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="panel text-center" style="padding: clamp(32px, 5vw, 60px)">
+            <span class="eyebrow">Ready when you are</span>
+            <h2>Reserve your room in under two minutes</h2>
+            <p class="lede" style="max-width: 60ch; margin-inline: auto">
+              Free cancellation up to 48 hours before check-in. Pay by card, bank transfer or
+              simply at the property.
+            </p>
+            <div class="row row--end" style="justify-content: center; margin-top: 22px">
+              <a class="btn btn--lg" href="booking.html">Book now</a>
+              <a class="btn btn--ghost btn--lg" href="contact.html">Talk to us</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/home.js"></script>
+  </body>
+</html>

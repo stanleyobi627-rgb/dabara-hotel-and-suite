@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Staff dashboard — Dabara Hotel and Suite</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#faf6ef" />
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Login -->
+    <div class="login-screen" id="loginScreen" hidden>
+      <div class="login-card">
+        <a class="brand mb-3" href="index.html">
+          <span class="brand__mark">D</span>
+          <span>
+            <span class="brand__name">Dabara</span>
+            <span class="brand__sub">Hotel &amp; Suite</span>
+          </span>
+        </a>
+        <h1 style="font-size: 1.5rem">Staff sign in</h1>
+        <p class="muted text-sm">Enter the manager passcode to open the dashboard.</p>
+        <label class="field">
+          <span class="field__label">Passcode</span>
+          <input class="input" type="password" id="passcode" placeholder="••••••••" autocomplete="current-password" />
+        </label>
+        <div id="loginError"></div>
+        <button class="btn btn--block" type="button" id="signIn">Open dashboard</button>
+        <p class="text-xs muted text-center mt-2 mb-0">
+          Demo passcode is stored in <b>js/data.js</b>. Change it before going live.
+        </p>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="admin-shell" id="dashboard" hidden>
+      <aside class="admin-side">
+        <a class="brand" href="index.html">
+          <span class="brand__mark">D</span>
+          <span>
+            <span class="brand__name">Dabara</span>
+            <span class="brand__sub">Dashboard</span>
+          </span>
+        </a>
+        <button class="navlink is-active" type="button" data-tab="overview">Overview</button>
+        <button class="navlink" type="button" data-tab="bookings">Bookings</button>
+        <button class="navlink" type="button" data-tab="rooms">Rooms</button>
+        <button class="navlink" type="button" data-tab="enquiries">Enquiries</button>
+        <button class="navlink" type="button" data-tab="settings">Hotel info</button>
+        <a href="index.html">View website</a>
+        <button class="navlink" type="button" id="signOut" style="margin-top: auto">Sign out</button>
+      </aside>
+
+      <main class="admin-main">
+        <div class="admin-top">
+          <div>
+            <h1 id="tabTitle">Overview</h1>
+            <p class="muted text-sm mb-0" id="tabSubtitle"></p>
+          </div>
+          <div class="row">
+            <button class="icon-btn" id="adminTheme" type="button" aria-label="Toggle dark mode"></button>
+            <button class="btn btn--sm btn--ghost" type="button" id="exportAll">Export all (CSV)</button>
+          </div>
+        </div>
+
+        <!-- Overview -->
+        <section data-view="overview">
+          <div class="stat-grid" id="statGrid"></div>
+          <div class="grid grid--2">
+            <div class="panel">
+              <h2 class="panel__title">Recent bookings</h2>
+              <div class="table-wrap" id="recentTable"></div>
+            </div>
+            <div class="panel">
+              <h2 class="panel__title">Occupancy by room type</h2>
+              <div class="table-wrap" id="occupancyTable"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bookings -->
+        <section data-view="bookings" hidden>
+          <div class="filterbar">
+            <label class="field">
+              <span class="field__label">Status</span>
+              <select class="select" id="statusFilter">
+                <option value="all">All statuses</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="pending">Pending payment</option>
+                <option value="checked-in">Checked in</option>
+                <option value="checked-out">Checked out</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </label>
+            <label class="field grow">
+              <span class="field__label">Search</span>
+              <input class="input" type="search" id="searchBookings" placeholder="Code, guest or room" />
+            </label>
+            <button class="btn btn--sm" type="button" id="exportBookings">Export CSV</button>
+          </div>
+          <div class="table-wrap" id="bookingsTable"></div>
+        </section>
+
+        <!-- Rooms -->
+        <section data-view="rooms" hidden>
+          <div class="row row--between mb-3">
+            <p class="muted text-sm mb-0">
+              Rates, unit counts and photos changed here are saved in this browser only.
+            </p>
+            <button class="btn btn--sm btn--ghost" type="button" id="resetRooms">Reset to defaults</button>
+          </div>
+          <div class="grid grid--2" id="roomsGrid"></div>
+        </section>
+
+        <!-- Enquiries -->
+        <section data-view="enquiries" hidden>
+          <div class="table-wrap" id="enquiriesTable"></div>
+        </section>
+
+        <!-- Settings -->
+        <section data-view="settings" hidden>
+          <div class="panel" style="max-width: 720px">
+            <h2 class="panel__title">Hotel information</h2>
+            <p class="muted text-sm">
+              These values appear in the footer, contact page and booking confirmations.
+            </p>
+            <form id="infoForm" class="form-grid">
+              <label class="field">
+                <span class="field__label">Phone number</span>
+                <input class="input" type="tel" id="infoPhone" required />
+              </label>
+              <label class="field">
+                <span class="field__label">Email address</span>
+                <input class="input" type="email" id="infoEmail" required />
+              </label>
+              <label class="field field--full">
+                <span class="field__label">Address</span>
+                <input class="input" type="text" id="infoAddress" required />
+              </label>
+              <label class="field">
+                <span class="field__label">Check-in time</span>
+                <input class="input" type="text" id="infoCheckIn" required />
+              </label>
+              <label class="field">
+                <span class="field__label">Check-out time</span>
+                <input class="input" type="text" id="infoCheckOut" required />
+              </label>
+              <div class="field--full">
+                <button class="btn" type="submit">Save hotel information</button>
+              </div>
+            </form>
+            <hr class="divider" />
+            <h3 class="panel__title">Danger zone</h3>
+            <p class="muted text-sm">
+              Clearing all data removes every booking, enquiry and room change stored in this
+              browser. This cannot be undone.
+            </p>
+            <button class="btn btn--sm btn--danger" type="button" id="clearData">Clear all local data</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/admin.js"></script>
+  </body>
+</html>

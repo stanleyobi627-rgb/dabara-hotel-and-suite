@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-error.log*
+*.log
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# local env (none are used for this static site, but just in case)
+.env
+.env.local
+
+# vercel
+.vercel

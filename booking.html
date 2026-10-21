@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book a room — Dabara Hotel and Suite</title>
+    <meta
+      name="description"
+      content="Reserve a room or suite at Dabara Hotel and Suite in Awka. Live availability, instant confirmation and flexible payment."
+    />
+    <meta name="theme-color" content="#faf6ef" />
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+
+    <main id="main">
+      <section class="page-head">
+        <div class="container">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="index.html">Home</a> <span>/</span> <a href="rooms.html">Rooms</a>
+            <span>/</span> <span>Booking</span>
+          </nav>
+          <h1>Reserve your stay</h1>
+          <p>
+            Three short steps: choose your room and dates, tell us who is coming, then pay by
+            card, transfer or at the property. You will get a confirmation code straight away.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="container">
+          <div class="steps" id="steps">
+            <div class="step is-active" data-step="1"><b>1</b> Stay details</div>
+            <div class="step" data-step="2"><b>2</b> Guest details</div>
+            <div class="step" data-step="3"><b>3</b> Payment</div>
+            <div class="step" data-step="4"><b>4</b> Confirmation</div>
+          </div>
+
+          <div class="room-hero">
+            <div>
+              <!-- Step 1 -->
+              <section class="panel" data-panel="1">
+                <h2 class="panel__title">Your stay</h2>
+                <p class="muted">Pick a room, your dates and any extras you would like added.</p>
+
+                <label class="field">
+                  <span class="field__label">Room type</span>
+                  <select class="select" id="roomSelect"></select>
+                  <span class="field__hint" id="roomHint"></span>
+                </label>
+
+                <div class="field-row">
+                  <label class="field">
+                    <span class="field__label">Check in</span>
+                    <input class="input" type="date" id="checkIn" required />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Check out</span>
+                    <input class="input" type="date" id="checkOut" required />
+                  </label>
+                </div>
+
+                <div class="field-row">
+                  <label class="field">
+                    <span class="field__label">Adults</span>
+                    <select class="select" id="adults">
+                      <option value="1">1 adult</option>
+                      <option value="2" selected>2 adults</option>
+                      <option value="3">3 adults</option>
+                      <option value="4">4 adults</option>
+                      <option value="5">5 adults</option>
+                      <option value="6">6 adults</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Children</span>
+                    <select class="select" id="children">
+                      <option value="0" selected>0 children</option>
+                      <option value="1">1 child</option>
+                      <option value="2">2 children</option>
+                      <option value="3">3 children</option>
+                    </select>
+                  </label>
+                </div>
+
+                <label class="field">
+                  <span class="field__label">Rooms</span>
+                  <select class="select" id="quantity">
+                    <option value="1">1 room</option>
+                    <option value="2">2 rooms</option>
+                    <option value="3">3 rooms</option>
+                    <option value="4">4 rooms</option>
+                  </select>
+                </label>
+
+                <hr class="divider" />
+                <h3 class="panel__title">Add extras</h3>
+                <p class="muted text-sm">Optional extras are added to your final total.</p>
+                <div id="extras-list"></div>
+
+                <hr class="divider" />
+                <h3 class="panel__title">Promotion code</h3>
+                <div class="row">
+                  <input class="input grow" type="text" id="promoCode" placeholder="e.g. DABARA10" />
+                  <button class="btn btn--ghost" type="button" id="applyPromo">Apply</button>
+                </div>
+                <div id="promoMessage" class="mt-2"></div>
+
+                <div class="row row--end mt-3">
+                  <button class="btn" type="button" id="toStep2">Continue to guest details</button>
+                </div>
+              </section>
+
+              <!-- Step 2 -->
+              <section class="panel" data-panel="2" hidden>
+                <h2 class="panel__title">Guest details</h2>
+                <p class="muted">We use these to send your confirmation and arrival information.</p>
+
+                <form id="guestForm" class="form-grid">
+                  <label class="field">
+                    <span class="field__label">First name</span>
+                    <input class="input" type="text" id="firstName" required autocomplete="given-name" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Last name</span>
+                    <input class="input" type="text" id="lastName" required autocomplete="family-name" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Email address</span>
+                    <input class="input" type="email" id="email" required autocomplete="email" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Phone number</span>
+                    <input class="input" type="tel" id="phone" required autocomplete="tel" placeholder="+234 800 000 0000" />
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Arrival time</span>
+                    <select class="select" id="arrival">
+                      <option value="Before 2:00 PM">Before 2:00 PM</option>
+                      <option value="2:00 PM – 6:00 PM" selected>2:00 PM – 6:00 PM</option>
+                      <option value="6:00 PM – 10:00 PM">6:00 PM – 10:00 PM</option>
+                      <option value="After 10:00 PM">After 10:00 PM</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span class="field__label">Occasion (optional)</span>
+                    <select class="select" id="occasion">
+                      <option value="">None</option>
+                      <option value="Birthday">Birthday</option>
+                      <option value="Anniversary">Anniversary</option>
+                      <option value="Business trip">Business trip</option>
+                      <option value="Wedding">Wedding</option>
+                      <option value="Honeymoon">Honeymoon</option>
+                    </select>
+                  </label>
+                  <label class="field field--full">
+                    <span class="field__label">Special requests (optional)</span>
+                    <textarea class="textarea" id="requests" placeholder="Airport pickup, extra pillows, quiet room, late arrival…"></textarea>
+                  </label>
+                  <label class="check field--full">
+                    <input type="checkbox" id="terms" />
+                    <span class="check__body">
+                      <b>I accept the booking terms</b>
+                      <span>Free cancellation up to 48 hours before check-in. One night is charged inside 48 hours.</span>
+                    </span>
+                  </label>
+                </form>
+
+                <div class="row row--between mt-3">
+                  <button class="btn btn--ghost" type="button" data-back="1">Back</button>
+                  <button class="btn" type="button" id="toStep3">Continue to payment</button>
+                </div>
+              </section>
+
+              <!-- Step 3 -->
+              <section class="panel" data-panel="3" hidden>
+                <h2 class="panel__title">Payment</h2>
+                <div class="alert alert--info mb-3">
+                  <span id="demo-icon"></span>
+                  <span>
+                    <b>Demo checkout.</b> This site demonstrates the booking flow — no real card
+                    is charged and no payment details leave your browser. Final payment is taken
+                    at the front desk or via the secure link we email you.
+                  </span>
+                </div>
+
+                <label class="pay-option">
+                  <input type="radio" name="payment" value="card" checked />
+                  <span>
+                    <b>Pay by card</b>
+                    <span>Visa, Mastercard or Verve — charged at the property on arrival.</span>
+                  </span>
+                </label>
+                <div id="cardFields">
+                  <div class="field-row">
+                    <label class="field">
+                      <span class="field__label">Card number</span>
+                      <input class="input" type="text" id="cardNumber" inputmode="numeric" placeholder="4242 4242 4242 4242" maxlength="19" />
+                    </label>
+                    <label class="field">
+                      <span class="field__label">Name on card</span>
+                      <input class="input" type="text" id="cardName" placeholder="As printed on the card" />
+                    </label>
+                  </div>
+                  <div class="field-row">
+                    <label class="field">
+                      <span class="field__label">Expiry</span>
+                      <input class="input" type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" />
+                    </label>
+                    <label class="field">
+                      <span class="field__label">CVV</span>
+                      <input class="input" type="text" id="cardCvv" inputmode="numeric" placeholder="123" maxlength="4" />
+                    </label>
+                  </div>
+                </div>
+
+                <label class="pay-option">
+                  <input type="radio" name="payment" value="transfer" />
+                  <span>
+                    <b>Bank transfer</b>
+                    <span id="bankDetails"></span>
+                  </span>
+                </label>
+
+                <label class="pay-option">
+                  <input type="radio" name="payment" value="property" />
+                  <span>
+                    <b>Pay at the property</b>
+                    <span>Cash, POS or transfer when you check in. We will hold the room for you.</span>
+                  </span>
+                </label>
+
+                <div class="row row--between mt-3">
+                  <button class="btn btn--ghost" type="button" data-back="2">Back</button>
+                  <button class="btn btn--accent" type="button" id="confirmBooking">Confirm booking</button>
+                </div>
+              </section>
+
+              <!-- Step 4 -->
+              <section class="panel" data-panel="4" hidden>
+                <div class="confirm-card" id="confirmCard"></div>
+              </section>
+            </div>
+
+            <aside>
+              <div class="booking-card" id="summaryCard">
+                <h3 class="panel__title">Booking summary</h3>
+                <div id="summaryBody"></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/booking.js"></script>
+  </body>
+</html>

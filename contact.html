@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact us — Dabara Hotel and Suite</title>
+    <meta
+      name="description"
+      content="Reach Dabara Hotel and Suite in Awka, Anambra State by phone, WhatsApp or email. Find directions, answer FAQs or send an enquiry."
+    />
+    <meta name="theme-color" content="#faf6ef" />
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+
+    <main id="main">
+      <section class="page-head">
+        <div class="container">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="index.html">Home</a> <span>/</span> <span>Contact</span>
+          </nav>
+          <h1>Get in touch</h1>
+          <p>
+            Our front desk is on the line every hour of the day. Call, WhatsApp or send an
+            enquiry and we will come back to you the same day.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="container">
+          <div class="grid grid--3" id="contact-cards"></div>
+        </div>
+      </section>
+
+      <section class="section section--alt">
+        <div class="container">
+          <div class="room-hero">
+            <div class="panel">
+              <h2 class="panel__title">Send an enquiry</h2>
+              <p class="muted">
+                For groups, events, long stays or anything unusual. Enquiries are stored in your
+                browser and reviewed by our team.
+              </p>
+              <form id="enquiryForm" class="form-grid">
+                <label class="field">
+                  <span class="field__label">Full name</span>
+                  <input class="input" type="text" id="name" required autocomplete="name" />
+                </label>
+                <label class="field">
+                  <span class="field__label">Phone number</span>
+                  <input class="input" type="tel" id="phone" required autocomplete="tel" />
+                </label>
+                <label class="field">
+                  <span class="field__label">Email address</span>
+                  <input class="input" type="email" id="email" required autocomplete="email" />
+                </label>
+                <label class="field">
+                  <span class="field__label">What is it about?</span>
+                  <select class="select" id="topic">
+                    <option value="A room reservation">A room reservation</option>
+                    <option value="A group booking">A group booking (9+ rooms)</option>
+                    <option value="Wedding or event">Wedding or event</option>
+                    <option value="Conference or meeting">Conference or meeting</option>
+                    <option value="Airport transfer">Airport transfer</option>
+                    <option value="Something else">Something else</option>
+                  </select>
+                </label>
+                <label class="field field--full">
+                  <span class="field__label">Message</span>
+                  <textarea class="textarea" id="message" required placeholder="Tell us dates, number of guests, and anything we should prepare…"></textarea>
+                </label>
+                <div class="field--full">
+                  <button class="btn" type="submit">Send enquiry</button>
+                </div>
+              </form>
+              <div id="enquiryResult" class="mt-2"></div>
+            </div>
+
+            <aside class="stack">
+              <div class="panel">
+                <h3 class="panel__title">Find us</h3>
+                <ul class="info-list" id="address-list"></ul>
+              </div>
+              <div class="panel">
+                <h3 class="panel__title">Nearby landmarks</h3>
+                <ul class="info-list" id="landmark-list"></ul>
+              </div>
+              <div class="map-embed" id="map-embed">
+                <div>
+                  <p class="mb-1" style="color: var(--text)"><b id="map-title"></b></p>
+                  <p class="mb-2" id="map-address"></p>
+                  <a class="btn btn--sm btn--ghost" id="map-link" target="_blank" rel="noopener"
+                    >Open in Google Maps</a>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="container container--narrow">
+          <div class="section__head section__head--center">
+            <span class="eyebrow">FAQ</span>
+            <h2>Frequently asked questions</h2>
+          </div>
+          <div id="faq-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/contact.js"></script>
+  </body>
+</html>

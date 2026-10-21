@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rooms &amp; Suites — Dabara Hotel and Suite</title>
+    <meta
+      name="description"
+      content="Browse all seven room types at Dabara Hotel and Suite in Awka, Anambra State. Filter by dates, guests and price, and book instantly."
+    />
+    <meta name="theme-color" content="#faf6ef" />
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+
+    <main id="main">
+      <section class="page-head">
+        <div class="container">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="index.html">Home</a> <span>/</span> <span>Rooms</span>
+          </nav>
+          <h1>Rooms &amp; suites</h1>
+          <p>
+            Seven room types, from a quiet courtyard standard to a 95 m² presidential terrace.
+            Pick your dates and we will show you exactly what is free.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="container">
+          <form class="filterbar" id="filter-form">
+            <label class="field">
+              <span class="field__label">Check in</span>
+              <input class="input" type="date" id="checkIn" name="checkIn" required />
+            </label>
+            <label class="field">
+              <span class="field__label">Check out</span>
+              <input class="input" type="date" id="checkOut" name="checkOut" required />
+            </label>
+            <label class="field">
+              <span class="field__label">Guests</span>
+              <select class="select" id="guests" name="guests">
+                <option value="1">1 guest</option>
+                <option value="2">2 guests</option>
+                <option value="3">3 guests</option>
+                <option value="4">4 guests</option>
+                <option value="5">5 guests</option>
+                <option value="6">6 guests</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field__label">Room type</span>
+              <select class="select" id="type" name="type">
+                <option value="all">All room types</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field__label">Max price</span>
+              <select class="select" id="price" name="price">
+                <option value="any">Any price</option>
+                <option value="30000">Up to ₦30,000</option>
+                <option value="50000">Up to ₦50,000</option>
+                <option value="80000">Up to ₦80,000</option>
+                <option value="120000">Up to ₦120,000</option>
+                <option value="999999">Any price</option>
+              </select>
+            </label>
+            <label class="check" style="align-self: flex-end; margin-bottom: 2px">
+              <input type="checkbox" id="availableOnly" checked />
+              <span class="check__body">
+                <b>Available only</b>
+                <span>Hide sold-out rooms</span>
+              </span>
+            </label>
+            <button class="btn" type="submit">Apply</button>
+            <span class="filterbar__count" id="result-count"></span>
+          </form>
+
+          <div class="grid grid--3" id="room-grid"></div>
+
+          <div class="empty" id="no-results" hidden>
+            <div id="empty-icon"></div>
+            <h3>No rooms match those filters</h3>
+            <p class="mb-2">
+              Try widening your dates, reducing the guest count, or raising the price limit.
+            </p>
+            <button class="btn btn--ghost btn--sm" type="button" id="reset-filters">Reset filters</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt">
+        <div class="container container--narrow">
+          <div class="section__head section__head--center">
+            <span class="eyebrow">Good to know</span>
+            <h2>Room policies</h2>
+          </div>
+          <div class="grid grid--2" id="policy-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/rooms.js"></script>
+  </body>
+</html>
