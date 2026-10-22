@@ -132,9 +132,24 @@ cdp.on((method, params) => {
 
 let failures = 0;
 
+function waitForLoad() {
+  return new Promise((resolve) => {
+    const timer = setTimeout(resolve, 8000);
+    const check = (method) => {
+      if (method === "Page.loadEventFired") {
+        clearTimeout(timer);
+        resolve();
+      }
+    };
+    cdp.on(check);
+  });
+}
+
 for (const page of PAGES) {
   errors = [];
+  const loaded = waitForLoad();
   await cdp.send("Page.navigate", { url: `${BASE}/${page}` });
+  await loaded;
   await sleep(800);
   // force lazy-loaded images to resolve before checking them
   await cdp.evaluate("window.scrollTo(0, document.body.scrollHeight)");
