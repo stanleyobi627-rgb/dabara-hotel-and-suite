@@ -1,5 +1,5 @@
 /**
- * Generates the original SVG artwork used across the Dabara Hotel and Suite site.
+ * Generates the original SVG artwork used across the Dabara Hotel and Suites site.
  * Run with:  node tools/generate-art.js
  *
  * Everything is drawn with plain shapes — no external assets, no stock images.

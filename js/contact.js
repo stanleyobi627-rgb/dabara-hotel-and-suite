@@ -43,7 +43,7 @@ function renderCards() {
 
 function renderDetails() {
   qs("#address-list").innerHTML = `
-    <li>${icon("pin")}<span>${HOTEL.address}</span></li>
+    <li>${icon("pin")}<span>${HOTEL.address}<br />Plus code ${HOTEL.plusCode}</span></li>
     <li>${icon("clock")}<span>Front desk open 24 hours<br />Check-in ${HOTEL.checkInTime} · Check-out ${HOTEL.checkOutTime}</span></li>
     <li>${icon("phone")}<span><a href="tel:${HOTEL.phoneRaw}">${HOTEL.phone}</a></span></li>
     <li>${icon("mail")}<span><a href="mailto:${HOTEL.email}">${HOTEL.email}</a></span></li>`;
@@ -54,7 +54,9 @@ function renderDetails() {
 
   qs("#map-title").textContent = HOTEL.name;
   qs("#map-address").textContent = HOTEL.address;
-  qs("#map-link").href = `https://maps.google.com/?q=${encodeURIComponent(HOTEL.address)}`;
+  qs("#map-link").href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${HOTEL.address} ${HOTEL.plusCode}`,
+  )}`;
 }
 
 function renderFaq() {

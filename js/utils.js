@@ -265,7 +265,7 @@ export function calendarEvent({ title, description, location, start, end }) {
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Dabara Hotel and Suite//Booking//EN",
+    "PRODID:-//Dabara Hotel and Suites//Booking//EN",
     "BEGIN:VEVENT",
     `DTSTART;VALUE=DATE:${stamp(start)}`,
     `DTEND;VALUE=DATE:${stamp(end)}`,

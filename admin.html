@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Staff dashboard — Dabara Hotel and Suite</title>
+    <title>Staff dashboard — Dabara Hotel and Suites</title>
     <meta name="robots" content="noindex" />
     <meta name="theme-color" content="#faf6ef" />
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
@@ -17,7 +17,7 @@
           <span class="brand__mark">D</span>
           <span>
             <span class="brand__name">Dabara</span>
-            <span class="brand__sub">Hotel &amp; Suite</span>
+            <span class="brand__sub">Hotel &amp; Suites</span>
           </span>
         </a>
         <h1 style="font-size: 1.5rem">Staff sign in</h1>
@@ -105,11 +105,28 @@
 
         <!-- Rooms -->
         <section data-view="rooms" hidden>
-          <div class="row row--between mb-3">
-            <p class="muted text-sm mb-0">
-              Rates, unit counts and photos changed here are saved in this browser only.
-            </p>
-            <button class="btn btn--sm btn--ghost" type="button" id="resetRooms">Reset to defaults</button>
+          <div class="panel mb-3">
+            <div class="row row--between" style="align-items:flex-start; flex-wrap:wrap; gap:16px">
+              <div>
+                <h2 class="panel__title">Room catalogue</h2>
+                <p class="muted text-sm mb-0">
+                  Every price, count and detail on the website comes from here. Changes are saved in
+                  this browser, then use <b>Copy js/catalogue.js</b> or <b>Download rooms.json</b> to
+                  publish them for every guest.
+                </p>
+                <p class="text-sm mb-0" id="roomsSummary" style="margin-top:8px"></p>
+              </div>
+              <div class="row" style="gap:8px; flex-wrap:wrap">
+                <button class="btn btn--sm" type="button" id="addRoom">Add room type</button>
+                <button class="btn btn--sm btn--ghost" type="button" id="downloadCatalogue">Download rooms.json</button>
+                <button class="btn btn--sm btn--ghost" type="button" id="copyCatalogue">Copy js/catalogue.js</button>
+                <label class="btn btn--sm btn--ghost" style="margin:0">
+                  Upload rooms.json
+                  <input id="importCatalogue" type="file" accept="application/json,.json" class="sr-only" />
+                </label>
+                <button class="btn btn--sm btn--danger" type="button" id="resetRooms">Reset to defaults</button>
+              </div>
+            </div>
           </div>
           <div class="grid grid--2" id="roomsGrid"></div>
         </section>
@@ -151,6 +168,10 @@
                 <button class="btn" type="submit">Save hotel information</button>
               </div>
             </form>
+            <p class="text-xs muted">
+              Saved values apply to this browser only. To change the website for every guest, edit
+              <b>js/data.js</b> and publish.
+            </p>
             <hr class="divider" />
             <h3 class="panel__title">Danger zone</h3>
             <p class="muted text-sm">

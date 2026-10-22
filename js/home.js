@@ -1,4 +1,5 @@
-import { HOTEL, ROOMS, SERVICES, REVIEWS, FAQ, AMENITIES } from "./data.js";
+import { HOTEL, SERVICES, REVIEWS, FAQ, AMENITIES } from "./data.js";
+import { getRooms, totalReviews, totalUnits } from "./rooms-store.js";
 import { bookings } from "./storage.js";
 import {
   addDays,
@@ -17,54 +18,52 @@ import { amenityChips, starRow } from "./main.js";
 const FEATURES = [
   {
     icon: "wifi",
-    title: "Fast Wi-Fi everywhere",
+    title: "Free Wi-Fi throughout",
     text: "Fibre internet in every room and all public areas, so your calls and uploads never drop.",
   },
   {
     icon: "pool",
-    title: "Rooftop pool & terrace",
-    text: "A heated 12-metre pool overlooking Awka, with shaded cabanas and a poolside bar.",
+    title: "Outdoor swimming pool",
+    text: "A well-kept pool in a quiet corner of the grounds, with shaded loungers and towels on the deck.",
   },
   {
-    icon: "spa",
-    title: "Spa & wellness",
-    text: "Deep tissue, hot stone and body polish treatments in two calm, private rooms.",
+    icon: "hottub",
+    title: "Hot tub",
+    text: "A heated hot tub set apart from the pool for a quiet soak after a long day in Nnewi.",
+  },
+  {
+    icon: "gym",
+    title: "Fitness centre",
+    text: "Cardio, free weights and a stretching area, open 24 hours so it fits around your working day.",
   },
   {
     icon: "restaurant",
-    title: "Local kitchen",
-    text: "Iroko Restaurant serves Anambra classics alongside continental favourites, until 11 PM.",
+    title: "Restaurant, bar & night club",
+    text: "Local and continental dishes, a full bar, and a dedicated night club on the same premises.",
   },
   {
-    icon: "shield",
-    title: "Safe & secure",
-    text: "Guarded parking, CCTV, 24-hour front desk and in-room safes for your valuables.",
+    icon: "power",
+    title: "24-hour power",
+    text: "Power runs around the clock with backup, so an outage never interrupts your stay or your work.",
   },
   {
-    icon: "plane",
-    title: "Airport transfers",
-    text: "Door-to-door pickup from Enugu International Airport, tracked and on time.",
+    icon: "keycard",
+    title: "Card-key security",
+    text: "Every room is opened with a secure card key issued at reception, with safes in each room.",
   },
   {
-    icon: "conference",
-    title: "Meetings & events",
-    text: "A 120-seat conference hall with hybrid meeting kit and full catering packages.",
-  },
-  {
-    icon: "car",
+    icon: "parking",
     title: "Free parking",
-    text: "Complimentary guarded parking for 40 vehicles, with valet on request for suites.",
+    text: "Complimentary on-site parking for cars and buses, with valet on request for suites and events.",
   },
 ];
 
 function renderStats() {
-  const totalUnits = ROOMS.reduce((sum, room) => sum + room.units, 0);
-  const reviewCount = ROOMS.reduce((sum, room) => sum + room.reviews, 0);
   const stats = [
-    { value: totalUnits, label: "Rooms & suites" },
-    { value: "4.7", label: "Average guest rating" },
-    { value: reviewCount.toLocaleString("en-NG"), label: "Verified reviews" },
-    { value: "2 hrs", label: "Free cancellation" },
+    { value: totalUnits(), label: "Rooms & suites" },
+    { value: HOTEL.rating.toFixed(1), label: "Average guest rating" },
+    { value: totalReviews().toLocaleString("en-NG"), label: "Verified reviews" },
+    { value: "24 hrs", label: "Power & front desk" },
   ];
   qs("#hero-stats").innerHTML = stats
     .map((s) => `<div class="hero__stat"><b>${s.value}</b><span>${s.label}</span></div>`)
@@ -108,8 +107,8 @@ function roomCard(room) {
 }
 
 function renderFeaturedRooms() {
-  const picks = ["deluxe", "executive", "standard"].map((id) => ROOMS.find((r) => r.id === id));
-  qs("#featured-rooms").innerHTML = picks.map(roomCard).join("");
+  const picks = ["deluxe", "executive", "standard"].map((id) => getRooms().find((r) => r.id === id));
+  qs("#featured-rooms").innerHTML = picks.filter(Boolean).map(roomCard).join("");
 }
 
 function renderServices() {
@@ -188,7 +187,7 @@ function initSearch() {
       return;
     }
     const guests = Number(qs("#guests").value);
-    const available = ROOMS.filter(
+    const available = getRooms().filter(
       (room) => room.maxGuests >= guests && room.units > 0,
     ).length;
     const url = new URL("rooms.html", window.location.href);

@@ -1,4 +1,5 @@
-import { HOTEL, ROOMS, AMENITIES, FAQ } from "./data.js";
+import { HOTEL, AMENITIES, FAQ } from "./data.js";
+import { getRoom, getRooms } from "./rooms-store.js";
 import { bookings } from "./storage.js";
 import {
   addDays,
@@ -31,7 +32,7 @@ function galleryImages() {
 }
 
 function renderHeader() {
-  document.title = `${room.name} — Dabara Hotel and Suite`;
+  document.title = `${room.name} — ${HOTEL.name}`;
   qs("#crumb-name").textContent = room.name;
   qs("#room-name").textContent = room.name;
   qs("#room-summary").innerHTML = `${room.beds} · ${room.size} m² · ${room.view} · sleeps ${room.maxGuests} — ${room.description.slice(0, 120)}…`;
@@ -102,7 +103,8 @@ function renderFaq() {
 }
 
 function renderRelated() {
-  const related = ROOMS.filter((r) => r.id !== room.id)
+  const related = getRooms()
+    .filter((r) => r.id !== room.id)
     .sort((a, b) => Math.abs(a.rate - room.rate) - Math.abs(b.rate - room.rate))
     .slice(0, 3);
 
@@ -242,8 +244,7 @@ function initForm() {
 }
 
 function init() {
-  const id = param("id") || "deluxe";
-  room = ROOMS.find((r) => r.id === id) || ROOMS[2];
+  room = getRoom(param("id") || "deluxe");
   setParam("id", room.id);
 
   renderHeader();

@@ -6,25 +6,25 @@ const EVENTS = [
   {
     icon: "gift",
     title: "Weddings & receptions",
-    text: "Full reception planning for up to 300 guests — decor, catering, MC, and a bridal suite on the night.",
+    text: "Reception planning for birthdays, weddings and anniversaries — decor, catering, MC and rooms for every guest on site.",
   },
   {
-    icon: "conference",
+    icon: "events",
     title: "Corporate retreats",
-    text: "Half-day or full-day packages with break-out rooms, stationery, lunch and a coffee station.",
+    text: "Half-day or full-day packages with stationery, lunch and a coffee station for teams working in Nnewi.",
   },
   {
-    icon: "users",
-    title: "Private dining",
-    text: "The rooftop terrace seats fourteen for dinner, with a set menu from the Iroko kitchen.",
+    icon: "club",
+    title: "Night club & socials",
+    text: "A dedicated night club on the premises, plus community social gatherings that turn into late evenings.",
   },
 ];
 
 const INCLUDED = [
-  { icon: "wifi", title: "Fibre Wi-Fi", text: "High-speed internet in every room and public area." },
-  { icon: "parking", title: "Free parking", text: "Guarded on-site parking for 40 vehicles, valet on request." },
-  { icon: "shield", title: "24-hour security", text: "CCTV coverage, night security and safe boxes in every room." },
-  { icon: "laundry", title: "Laundry service", text: "Same-day washing and pressing, charged per kilogram." },
+  { icon: "wifi", title: "Free Wi-Fi", text: "Internet in every room and all public areas." },
+  { icon: "parking", title: "Free parking", text: "On-site parking for cars and buses, valet on request." },
+  { icon: "power", title: "24-hour power", text: "Power runs around the clock with backup for every room." },
+  { icon: "keycard", title: "Card-key access", text: "Every room opens with a secure card key issued at reception." },
 ];
 
 function serviceCard(service) {

@@ -29,7 +29,7 @@ function headerMarkup() {
         <span class="brand__mark">D</span>
         <span>
           <span class="brand__name">Dabara</span>
-          <span class="brand__sub">Hotel &amp; Suite</span>
+          <span class="brand__sub">Hotel &amp; Suites</span>
         </span>
       </a>
       <nav class="site-nav" aria-label="Primary">${links}</nav>
@@ -47,7 +47,7 @@ function headerMarkup() {
           <span class="brand__mark">D</span>
           <span>
             <span class="brand__name">Dabara</span>
-            <span class="brand__sub">Hotel &amp; Suite</span>
+            <span class="brand__sub">Hotel &amp; Suites</span>
           </span>
         </a>
         <button class="icon-btn" id="nav-close" type="button" aria-label="Close menu">${icon("close")}</button>
@@ -68,7 +68,7 @@ function footerMarkup() {
             <span class="brand__mark">D</span>
             <span>
               <span class="brand__name">Dabara</span>
-              <span class="brand__sub">Hotel &amp; Suite</span>
+              <span class="brand__sub">Hotel &amp; Suites</span>
             </span>
           </a>
           <p>${HOTEL.about}</p>
@@ -76,7 +76,9 @@ function footerMarkup() {
             <a href="https://wa.me/${HOTEL.whatsapp}" aria-label="WhatsApp" title="WhatsApp">${icon("chat")}</a>
             <a href="tel:${HOTEL.phoneRaw}" aria-label="Call us" title="Call us">${icon("phone")}</a>
             <a href="mailto:${HOTEL.email}" aria-label="Email us" title="Email us">${icon("mail")}</a>
-            <a href="https://maps.google.com/?q=${encodeURIComponent(HOTEL.address)}" aria-label="Find us" title="Find us" rel="noopener">${icon("pin")}</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+              `${HOTEL.address} ${HOTEL.plusCode}`,
+            )}" aria-label="Find us" title="Find us" rel="noopener">${icon("pin")}</a>
           </div>
         </div>
         <div>
@@ -93,9 +95,9 @@ function footerMarkup() {
           <h4>Guests</h4>
           <ul class="footer-links">
             <li><a href="contact.html#faq">FAQ</a></li>
-            <li><a href="services.html#spa">Spa &amp; wellness</a></li>
+            <li><a href="services.html#wellness">Hot tub &amp; wellness</a></li>
             <li><a href="services.html#restaurant">Restaurant &amp; bar</a></li>
-            <li><a href="services.html#conference">Meetings &amp; events</a></li>
+            <li><a href="services.html#events">Meetings &amp; events</a></li>
             <li><a href="contact.html#faq">Cancellation policy</a></li>
           </ul>
         </div>
@@ -103,6 +105,7 @@ function footerMarkup() {
           <h4>Reach us</h4>
           <ul class="footer-links">
             <li>${HOTEL.address}</li>
+            <li>Plus code ${HOTEL.plusCode}</li>
             <li><a href="tel:${HOTEL.phoneRaw}">${HOTEL.phone}</a></li>
             <li><a href="mailto:${HOTEL.email}">${HOTEL.email}</a></li>
             <li>Check-in ${HOTEL.checkInTime} · Check-out ${HOTEL.checkOutTime}</li>

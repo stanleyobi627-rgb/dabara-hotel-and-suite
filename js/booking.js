@@ -1,4 +1,5 @@
-import { HOTEL, ROOMS, EXTRAS } from "./data.js";
+import { HOTEL, EXTRAS } from "./data.js";
+import { getRoom, getRooms } from "./rooms-store.js";
 import { bookings, guest } from "./storage.js";
 import {
   addDays,
@@ -38,7 +39,7 @@ const state = {
 };
 
 function room() {
-  return ROOMS.find((r) => r.id === state.roomId) || ROOMS[2];
+  return getRoom(state.roomId);
 }
 
 function totals() {
@@ -56,7 +57,7 @@ function totals() {
 
 function renderRoomOptions() {
   const select = qs("#roomSelect");
-  select.innerHTML = ROOMS.map(
+  select.innerHTML = getRooms().map(
     (r) => `<option value="${r.id}">${r.name} — ${naira(r.rate)} per night</option>`,
   ).join("");
   select.value = state.roomId;
@@ -182,7 +183,7 @@ function initStep1() {
 
   state.checkIn = param("checkIn") || todayISO();
   state.checkOut = param("checkOut") || addDays(state.checkIn, 1);
-  state.roomId = ROOMS.some((r) => r.id === param("room")) ? param("room") : "deluxe";
+  state.roomId = getRooms().some((r) => r.id === param("room")) ? param("room") : "deluxe";
   state.adults = Number(param("guests")) || 2;
   state.quantity = Number(param("quantity")) || 1;
   if (nightsBetween(state.checkIn, state.checkOut) < 1) {

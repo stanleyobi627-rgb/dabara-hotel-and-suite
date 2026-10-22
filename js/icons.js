@@ -59,6 +59,12 @@ export const ICONS = {
   building: "M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M9 7h3M9 11h3M9 15h3M2 21h20M17 9h3v12",
   gift: "M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7S9.5 3 7.5 3a2 2 0 0 0 0 4M12 7s2.5-4 4.5-4a2 2 0 0 1 0 4",
   tag: "M3 12V4h8l10 10-8 8zM7.5 7.5h.01",
+  hottub: "M4 14h16v2a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM6 14V5M18 14V5M12 5v9M8.5 9.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM15.5 9.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z",
+  club: "M9 18V6l11-2v12M9 18a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM20 16a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z",
+  power: "M12 3v9M6.5 6.8a8 8 0 1 0 11 0",
+  keycard: "M3 5h18v14H3zM6 9h6M6 13h4M15 9h3v5h-3z",
+  roomservice: "M3 15h18M4.5 15a7.5 7.5 0 0 1 15 0M12 5v4M10.5 9h3",
+  events: "M3 5h18v11H3zM8 20h8M12 16v4M7 9l2.5 2.5L12 9l2.5 2.5L17 9",
 };
 
 export function icon(name, className = "") {

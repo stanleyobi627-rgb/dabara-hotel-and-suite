@@ -1,4 +1,5 @@
-import { HOTEL, ROOMS, ROOM_TYPES, AMENITIES } from "./data.js";
+import { HOTEL, AMENITIES } from "./data.js";
+import { getRooms, getRoomTypes } from "./rooms-store.js";
 import { bookings } from "./storage.js";
 import {
   addDays,
@@ -35,7 +36,7 @@ const POLICIES = [
   {
     icon: "coffee",
     title: "Breakfast & dining",
-    text: "Breakfast is included with the Deluxe and above. Restaurant charges are settled at the property, and in-room dining is available around the clock.",
+    text: "Breakfast is a paid extra and can be added to your booking. Restaurant, bar and room service charges are settled at the property.",
   },
 ];
 
@@ -53,7 +54,7 @@ function readStateFromUrl() {
   state.checkIn = param("checkIn") || today;
   state.checkOut = param("checkOut") || addDays(state.checkIn, 1);
   state.guests = Number(param("guests")) || 2;
-  state.type = ROOM_TYPES.includes(param("type")) ? param("type") : "all";
+  state.type = getRoomTypes().includes(param("type")) ? param("type") : "all";
   state.price = param("price") || "any";
   if (nightsBetween(state.checkIn, state.checkOut) < 1) {
     state.checkOut = addDays(state.checkIn, 1);
@@ -80,7 +81,7 @@ function readStateFromForm() {
 function fillForm() {
   const typeSelect = qs("#type");
   if (!typeSelect.dataset.filled) {
-    ROOM_TYPES.forEach((type) => {
+    getRoomTypes().forEach((type) => {
       const option = document.createElement("option");
       option.value = type;
       option.textContent = type;
@@ -98,7 +99,7 @@ function fillForm() {
 
 function filteredRooms() {
   const all = bookings.all();
-  return ROOMS.filter((room) => {
+  return getRooms().filter((room) => {
     if (state.type !== "all" && room.type !== state.type) return false;
     if (state.price !== "any" && room.rate > Number(state.price)) return false;
     if (room.maxGuests < state.guests) return false;

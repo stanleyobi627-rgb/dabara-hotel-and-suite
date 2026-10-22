@@ -13,7 +13,7 @@ globalThis.localStorage = {
   clear: () => store.clear(),
 };
 
-const { HOTEL, ROOMS, EXTRAS, PROMOS } = await import("../js/data.js");
+const { HOTEL, ROOMS, EXTRAS, PROMOS, AMENITIES } = await import("../js/data.js");
 const { bookings, guest, enquiries } = await import("../js/storage.js");
 const {
   addDays,
@@ -44,17 +44,29 @@ function check(label, actual, expected) {
   }
 }
 
-console.log("\nDabara Hotel and Suite — smoke test\n");
+console.log("\nDabara Hotel and Suites — smoke test\n");
 
 /* data integrity */
 check("7 room types", ROOMS.length, 7);
-check("24 total units", ROOMS.reduce((s, r) => s + r.units, 0), 24);
+check("68 total units", ROOMS.reduce((s, r) => s + r.units, 0), 68);
 check("room ids unique", new Set(ROOMS.map((r) => r.id)).size, ROOMS.length);
 check("every room has an image", ROOMS.every((r) => r.image.endsWith(".svg")), true);
 check("every room has amenities", ROOMS.every((r) => r.amenities.length > 0), true);
 check("promo codes unique", new Set(PROMOS.map((p) => p.code)).size, PROMOS.length);
 check("extras priced", EXTRAS.every((e) => Number.isFinite(e.price)), true);
 check("vat rate 7.5%", HOTEL.vatRate, 0.075);
+check("hotel is in Nnewi", HOTEL.city, "Nnewi");
+check("hotel name is plural", HOTEL.name, "Dabara Hotel and Suites");
+check("guest rating 4.4", HOTEL.rating, 4.4);
+check("248 reviews", HOTEL.reviews, 248);
+check("68 rooms advertised", HOTEL.rooms, 68);
+check("every room amenity exists in AMENITIES", ROOMS.every((r) => r.amenities.every((a) => AMENITIES.some((x) => x.id === a))), true);
+check("no spa amenity", AMENITIES.some((a) => a.id === "spa"), false);
+check("hot tub amenity present", AMENITIES.some((a) => a.id === "hottub"), true);
+check("night club amenity present", AMENITIES.some((a) => a.id === "club"), true);
+check("24-hour power amenity present", AMENITIES.some((a) => a.id === "power"), true);
+check("card key amenity present", AMENITIES.some((a) => a.id === "keycard"), true);
+check("room reviews total 248", ROOMS.reduce((s, r) => s + r.reviews, 0), 248);
 
 /* dates */
 const today = todayISO();
@@ -82,8 +94,8 @@ const base = calculateTotal({
   promoCode: "",
 });
 check("nights counted", base.nights, 5);
-check("subtotal = rate x nights", base.subtotal, 45000 * 5);
-check("vat = 7.5% of subtotal", base.vat, Math.round(45000 * 5 * 0.075));
+check("subtotal = rate x nights", base.subtotal, 60000 * 5);
+check("vat = 7.5% of subtotal", base.vat, Math.round(60000 * 5 * 0.075));
 check("total = subtotal + vat", base.total, base.subtotal + base.vat);
 check("no discount without code", base.discount, 0);
 
@@ -92,7 +104,7 @@ const withExtras = calculateTotal({
   checkIn: today,
   checkOut: in5,
   quantity: 1,
-  extras: ["breakfast", "spa"],
+  extras: ["breakfast", "hottub"],
   promoCode: "",
 });
 check("extras added once per stay", withExtras.extrasTotal, 15000 + 20000);
@@ -116,7 +128,7 @@ const percent = calculateTotal({
   extras: [],
   promoCode: "dabara10",
 });
-check("percent promo applies 10%", percent.discount, Math.round((45000 * 5) * 0.1));
+check("percent promo applies 10%", percent.discount, Math.round((60000 * 5) * 0.1));
 check("promo code is case insensitive", percent.promo.code, "DABARA10");
 
 const fixed = calculateTotal({
@@ -130,7 +142,7 @@ const fixed = calculateTotal({
 check("fixed promo applies 20000", fixed.discount, 20000);
 check("total never goes negative", fixed.total > 0, true);
 check("unknown promo ignored", findPromo("NOPE"), null);
-check("multi room multiplies subtotal", calculateTotal({ room: deluxe, checkIn: today, checkOut: tomorrow, quantity: 2, extras: [] }).subtotal, 45000 * 2);
+check("multi room multiplies subtotal", calculateTotal({ room: deluxe, checkIn: today, checkOut: tomorrow, quantity: 2, extras: [] }).subtotal, 60000 * 2);
 
 /* availability */
 const standard = ROOMS.find((r) => r.id === "standard");
@@ -171,7 +183,7 @@ enquiries.add({ id: "e1", name: "Ada", topic: "Wedding" });
 check("enquiry stored", enquiries.all().length, 1);
 
 /* formatting */
-check("naira formatting", naira(45000), "₦45,000");
+check("naira formatting", naira(60000), "₦60,000");
 check("naira handles decimals", naira(0), "₦0");
 check("html escaping", escapeHtml("<b>hi</b>"), "&lt;b&gt;hi&lt;/b&gt;");
 check("booking code format", /^DAB-[A-Z]{3}\d{4}$/.test(bookingCode()), true);

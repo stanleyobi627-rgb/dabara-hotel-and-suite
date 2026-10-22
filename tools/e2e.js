@@ -154,7 +154,7 @@ async function connect() {
 
 const { cdp, chrome } = await connect();
 
-console.log("\nDabara Hotel and Suite — end-to-end browser test\n");
+console.log("\nDabara Hotel and Suites — end-to-end browser test\n");
 
 /* 0. start from a clean browser state */
 await cdp.goto(`${BASE}/index.html`);
@@ -171,6 +171,22 @@ check(
   await cdp.evaluate('document.querySelector("#checkIn").value === new Date().toISOString().slice(0,10)'),
   true,
 );
+checkTrue(
+  "home: hero badge shows the real rating",
+  await cdp.evaluate('document.querySelector("#hero-badge").textContent.includes("4.4") && document.querySelector("#hero-badge").textContent.includes("Nnewi")'),
+);
+checkTrue(
+  "home: 68 rooms advertised",
+  await cdp.evaluate('[...document.querySelectorAll(".hero__stat b")].some(b => b.textContent.trim() === "68")'),
+);
+checkTrue(
+  "home: footer shows the Nnewi address",
+  await cdp.evaluate('document.querySelector(".site-footer").textContent.includes("Ozubulu Road")'),
+);
+checkTrue(
+  "home: footer shows the real phone number",
+  await cdp.evaluate('document.querySelector(".site-footer").textContent.includes("0806 446 3317")'),
+);
 
 /* 2. rooms page filtering */
 await cdp.goto(`${BASE}/rooms.html`);
@@ -178,14 +194,14 @@ check("rooms: all 7 types listed", await cdp.evaluate('document.querySelectorAll
 await cdp.evaluate(`
   (() => {
     const sel = document.querySelector("#price");
-    sel.value = "50000";
+    sel.value = "70000";
     sel.dispatchEvent(new Event("change", { bubbles: true }));
     document.querySelector("#filter-form").dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
   })()
 `);
 await sleep(400);
-check("rooms: price filter applies", await cdp.evaluate('document.querySelectorAll("#room-grid .card").length'), 3);
-checkTrue("rooms: url reflects filters", await cdp.evaluate('location.search.includes("price=50000")'));
+check("rooms: price filter applies", await cdp.evaluate('document.querySelectorAll("#room-grid .card").length'), 4);
+checkTrue("rooms: url reflects filters", await cdp.evaluate('location.search.includes("price=70000")'));
 
 /* 3. booking flow */
 await cdp.goto(`${BASE}/booking.html?room=executive`);
@@ -303,6 +319,47 @@ check("admin: bookings table rendered", await cdp.evaluate('document.querySelect
 await cdp.evaluate('document.querySelector("[data-tab=\\"rooms\\"]").click()');
 await sleep(300);
 check("admin: room cards rendered", await cdp.evaluate('document.querySelectorAll("#roomsGrid [data-room]").length'), 7);
+check(
+  "admin: room summary totals 68 rooms",
+  await cdp.evaluate('document.querySelector("#roomsSummary").textContent.includes("68")'),
+  true,
+);
+
+/* 6b. the dashboard can re-price the hotel and the public site follows */
+await cdp.evaluate(`
+  (() => {
+    const panel = document.querySelector('[data-room="standard"]');
+    panel.querySelector('[data-f="rate"]').value = "41000";
+    panel.querySelector('[data-save-room="standard"]').click();
+  })()
+`);
+await sleep(400);
+check(
+  "admin: edited rate stored in the browser",
+  await cdp.evaluate('JSON.parse(localStorage.getItem("dabara_admin_rooms"))[0].rate'),
+  41000,
+);
+await cdp.goto(`${BASE}/rooms.html`);
+checkTrue(
+  "rooms: edited rate shows on the public site",
+  await cdp.evaluate('document.querySelector("#room-grid .card .price").textContent.includes("41,000")'),
+);
+
+/* 6c. add a room type, then reset back to defaults */
+await cdp.goto(`${BASE}/admin.html`);
+await cdp.evaluate('document.querySelector("[data-tab=\\"rooms\\"]").click()');
+await sleep(300);
+await cdp.evaluate('document.querySelector("#addRoom").click()');
+await sleep(400);
+check("admin: room type added", await cdp.evaluate('document.querySelectorAll("#roomsGrid [data-room]").length'), 8);
+await cdp.evaluate('document.querySelector("#resetRooms").click()');
+await sleep(400);
+check("admin: reset restores 7 room types", await cdp.evaluate('document.querySelectorAll("#roomsGrid [data-room]").length'), 7);
+check(
+  "admin: reset restores the default rate",
+  await cdp.evaluate('JSON.parse(localStorage.getItem("dabara_admin_rooms") || "null") === null'),
+  true,
+);
 await cdp.evaluate('document.querySelector("[data-tab=\\"settings\\"]").click()');
 await sleep(300);
 check("admin: settings pre-filled", await cdp.evaluate('document.querySelector("#infoPhone").value.length > 0'), true);

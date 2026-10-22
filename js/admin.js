@@ -1,4 +1,4 @@
-import { HOTEL, ROOMS } from "./data.js";
+import { HOTEL, AMENITIES, ROOMS } from "./data.js";
 import { admin, bookings, enquiries, KEYS, remove, theme } from "./storage.js";
 import {
   availableUnits,
@@ -235,6 +235,13 @@ function renderBookings() {
 function renderRooms() {
   const list = currentRooms();
 
+  qs("#roomsSummary").innerHTML = `<b>${list.length}</b> room types · <b>${list.reduce(
+    (sum, r) => sum + (Number(r.units) || 0),
+    0,
+  )}</b> rooms · from <b>${naira(Math.min(...list.map((r) => Number(r.rate) || 0)))}</b> to <b>${naira(
+    Math.max(...list.map((r) => Number(r.rate) || 0)),
+  )}</b> per night`;
+
   qs("#roomsGrid").innerHTML = list
     .map(
       (r) => `
@@ -254,14 +261,74 @@ function renderRooms() {
 
         <div class="field-row">
           <label class="field">
+            <span class="field__label">Room name</span>
+            <input class="input" type="text" data-f="name" value="${escapeHtml(r.name)}" />
+          </label>
+          <label class="field">
+            <span class="field__label">Type / group</span>
+            <input class="input" type="text" data-f="type" value="${escapeHtml(r.type)}" />
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
             <span class="field__label">Nightly rate (₦)</span>
-            <input class="input" type="number" min="0" step="1000" data-rate="${escapeHtml(r.id)}" value="${r.rate}" />
+            <input class="input" type="number" min="0" step="1000" data-f="rate" value="${r.rate}" />
           </label>
           <label class="field">
             <span class="field__label">Units available</span>
-            <input class="input" type="number" min="0" max="50" data-units="${escapeHtml(r.id)}" value="${r.units}" />
+            <input class="input" type="number" min="0" max="200" data-f="units" value="${r.units}" />
           </label>
         </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">Size (m²)</span>
+            <input class="input" type="number" min="0" step="1" data-f="size" value="${r.size}" />
+          </label>
+          <label class="field">
+            <span class="field__label">Sleeps</span>
+            <input class="input" type="number" min="1" max="20" step="1" data-f="maxGuests" value="${r.maxGuests}" />
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">Beds</span>
+            <input class="input" type="text" data-f="beds" value="${escapeHtml(r.beds)}" />
+          </label>
+          <label class="field">
+            <span class="field__label">Floor</span>
+            <input class="input" type="number" min="0" step="1" data-f="floor" value="${r.floor}" />
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">View</span>
+            <input class="input" type="text" data-f="view" value="${escapeHtml(r.view || "")}" />
+          </label>
+          <label class="field">
+            <span class="field__label">Ribbon</span>
+            <input class="input" type="text" data-f="tag" placeholder="Popular, New…" value="${escapeHtml(r.tag || "")}" />
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">Rating (0–5)</span>
+            <input class="input" type="number" min="0" max="5" step="0.1" data-f="rating" value="${r.rating}" />
+          </label>
+          <label class="field">
+            <span class="field__label">Reviews</span>
+            <input class="input" type="number" min="0" step="1" data-f="reviews" value="${r.reviews}" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field__label">Description</span>
+          <textarea class="input" rows="3" data-f="description">${escapeHtml(r.description || "")}</textarea>
+        </label>
 
         <label class="field">
           <span class="field__label">Room photo</span>
@@ -269,7 +336,21 @@ function renderRooms() {
           <span class="field__hint">PNG or JPG under 1 MB. Saved in this browser as a data URL.</span>
         </label>
 
+        <details class="field" style="margin-bottom:12px">
+          <summary class="field__label" style="cursor:pointer">Amenities included</summary>
+          <div class="row" style="gap:8px; flex-wrap:wrap; margin-top:10px">
+            ${AMENITIES.map(
+              (a) => `
+              <label class="check" style="margin:0">
+                <input type="checkbox" data-amenity="${a.id}" ${(r.amenities || []).includes(a.id) ? "checked" : ""} />
+                <span class="check__body">${icon(a.id)}<span>${escapeHtml(a.label)}</span></span>
+              </label>`,
+            ).join("")}
+          </div>
+        </details>
+
         <div class="row row--end">
+          <button class="btn btn--sm btn--danger" type="button" data-delete-room="${escapeHtml(r.id)}">Delete</button>
           <button class="btn btn--sm" type="button" data-save-room="${escapeHtml(r.id)}">Save changes</button>
         </div>
       </div>`,
@@ -280,9 +361,42 @@ function renderRooms() {
     button.addEventListener("click", () => saveRoom(button.dataset.saveRoom));
   });
 
+  qsa("[data-delete-room]").forEach((button) => {
+    button.addEventListener("click", () => deleteRoom(button.dataset.deleteRoom));
+  });
+
   qsa("[data-photo]").forEach((input) => {
     input.addEventListener("change", () => handlePhoto(input));
   });
+}
+
+function readRoomForm(id) {
+  const panel = qs(`[data-room="${id}"]`);
+  if (!panel) return null;
+  const value = (field) => {
+    const input = panel.querySelector(`[data-f="${field}"]`);
+    return input ? input.value : "";
+  };
+  const amenities = Array.from(panel.querySelectorAll("[data-amenity]"))
+    .filter((box) => box.checked)
+    .map((box) => box.dataset.amenity);
+
+  return {
+    name: value("name").trim() || "Untitled room",
+    type: value("type").trim() || "Standard Room",
+    rate: Math.max(0, Number(value("rate")) || 0),
+    units: Math.max(0, Number(value("units")) || 0),
+    size: Math.max(0, Number(value("size")) || 0),
+    maxGuests: Math.max(1, Number(value("maxGuests")) || 1),
+    beds: value("beds").trim() || "1 King bed",
+    floor: Math.max(0, Number(value("floor")) || 0),
+    view: value("view").trim() || "City view",
+    tag: value("tag").trim(),
+    rating: Math.min(5, Math.max(0, Number(value("rating")) || 0)),
+    reviews: Math.max(0, Number(value("reviews")) || 0),
+    description: value("description").trim(),
+    amenities,
+  };
 }
 
 function saveRoom(id) {
@@ -290,15 +404,53 @@ function saveRoom(id) {
   const index = list.findIndex((r) => r.id === id);
   if (index === -1) return;
 
-  const rate = Number(qs(`[data-rate="${id}"]`).value);
-  const units = Number(qs(`[data-units="${id}"]`).value);
-  list[index] = { ...list[index], rate: Math.max(0, rate), units: Math.max(0, units) };
+  const form = readRoomForm(id);
+  if (!form) return;
+  list[index] = { ...list[index], ...form };
 
   const photo = qs(`[data-photo="${id}"]`).dataset.newImage;
   if (photo) list[index].image = photo;
 
   admin.saveRooms(list);
   toast(`${list[index].name} updated.`, "success");
+  renderRooms();
+  renderOverview();
+}
+
+function deleteRoom(id) {
+  const list = currentRooms();
+  const room = list.find((r) => r.id === id);
+  if (!room) return;
+  if (!window.confirm(`Delete "${room.name}" from the catalogue?`)) return;
+  admin.saveRooms(list.filter((r) => r.id !== id));
+  toast(`${room.name} removed.`);
+  renderRooms();
+  renderOverview();
+}
+
+function addRoom() {
+  const list = currentRooms();
+  const id = `room-${Date.now().toString(36)}`;
+  list.push({
+    id,
+    name: "New Room Type",
+    type: "Standard Room",
+    rate: 40000,
+    size: 26,
+    beds: "1 Queen bed",
+    maxGuests: 2,
+    units: 1,
+    floor: 2,
+    view: "City view",
+    rating: 4.5,
+    reviews: 0,
+    tag: "",
+    amenities: ["wifi", "ac", "tv", "bath", "power", "keycard"],
+    image: "images/room-standard.svg",
+    description: "Describe this room type for guests.",
+  });
+  admin.saveRooms(list);
+  toast("Room type added — edit the details and save.");
   renderRooms();
   renderOverview();
 }
@@ -319,6 +471,74 @@ function handlePhoto(input) {
     toast("Photo loaded — remember to save the room.");
   };
   reader.readAsDataURL(file);
+}
+
+/* ---------- catalogue files ---------- */
+
+const CATALOGUE_HEADER = `/**
+ * ROOM CATALOGUE — the file to edit.
+ *
+ * Generated from the staff dashboard. Paste this over js/catalogue.js and
+ * publish to make the change live for every guest.
+ */
+export const ROOMS = `;
+
+function catalogueModule() {
+  return `${CATALOGUE_HEADER}${JSON.stringify(currentRooms(), null, 2)};\n`;
+}
+
+function downloadCatalogue() {
+  downloadFile(
+    "rooms.json",
+    JSON.stringify(currentRooms(), null, 2),
+    "application/json",
+  );
+  toast("rooms.json downloaded.");
+}
+
+async function copyCatalogueModule() {
+  const source = catalogueModule();
+  try {
+    await navigator.clipboard.writeText(source);
+    toast("js/catalogue.js copied — paste it over the file and publish.");
+  } catch {
+    downloadFile("catalogue.js", source, "text/javascript");
+    toast("Clipboard blocked — catalogue.js downloaded instead.");
+  }
+}
+
+function importCatalogue(input) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      if (!Array.isArray(parsed) || parsed.length === 0) throw new Error("empty");
+      parsed.forEach((room, i) => {
+        if (!room.id) room.id = `room-${i}-${Math.random().toString(36).slice(2, 7)}`;
+        if (!room.name) room.name = "Untitled room";
+        if (!room.type) room.type = "Standard Room";
+        room.rate = Number(room.rate) || 0;
+        room.units = Number(room.units) || 0;
+        room.maxGuests = Number(room.maxGuests) || 1;
+        room.size = Number(room.size) || 0;
+        room.reviews = Number(room.reviews) || 0;
+        room.rating = Number(room.rating) || 0;
+        room.amenities = Array.isArray(room.amenities) ? room.amenities : [];
+        room.image = room.image || "images/room-standard.svg";
+        room.description = room.description || "";
+      });
+      admin.saveRooms(parsed);
+      toast(`${parsed.length} room types imported.`);
+      renderRooms();
+      renderOverview();
+    } catch {
+      toast("That file is not a valid room catalogue.", "danger");
+    }
+    input.value = "";
+  };
+  reader.readAsText(file);
 }
 
 function renderEnquiries() {
@@ -342,9 +562,11 @@ function renderEnquiries() {
               <td style="max-width:320px">${escapeHtml(e.message)}</td>
               <td>
                 <div class="row" style="gap:6px; flex-wrap:nowrap">
-                  <a class="btn btn--sm btn--ghost" href="https://wa.me/2347041482947?text=${encodeURIComponent(
-                    `Hello ${e.name}, thank you for your enquiry about ${e.topic}.`,
-                  )}" target="_blank" rel="noopener">Reply</a>
+                <a class="btn btn--sm btn--ghost" href="https://wa.me/${escapeHtml(
+                  HOTEL.whatsapp,
+                )}?text=${encodeURIComponent(
+                  `Hello ${e.name}, thank you for your enquiry about ${e.topic}.`,
+                )}" target="_blank" rel="noopener">Reply</a>
                   <button class="btn btn--sm btn--danger" type="button" data-delete-enquiry="${escapeHtml(
                     e.id,
                   )}">Delete</button>
@@ -513,6 +735,11 @@ function init() {
     renderOverview();
     toast("Rooms reset to defaults.");
   });
+
+  qs("#addRoom").addEventListener("click", addRoom);
+  qs("#downloadCatalogue").addEventListener("click", downloadCatalogue);
+  qs("#copyCatalogue").addEventListener("click", copyCatalogueModule);
+  qs("#importCatalogue").addEventListener("change", importCatalogue);
 
   qs("#infoForm").addEventListener("submit", (event) => {
     event.preventDefault();
