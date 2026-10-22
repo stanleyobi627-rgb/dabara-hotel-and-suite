@@ -87,7 +87,8 @@ dabara-hotel-and-suite/
 ├── tools/
 │   ├── generate-art.js   # regenerates every SVG
 │   ├── smoke-test.js     # 58 headless assertions on the booking logic
-│   └── e2e.js            # 53 end-to-end browser assertions (headless Chrome)
+│   ├── e2e.js            # 53 end-to-end browser assertions (headless Chrome)
+│   └── probe.js          # console-error + broken-image probe for every page
 ├── vercel.json
 ├── package.json
 └── README.md
@@ -116,7 +117,14 @@ python -m http.server 5173
 npm run check        # syntax check every browser JS file
 npm test             # headless smoke test of the booking logic
 npm run e2e          # end-to-end browser test (needs the site on :5173)
+npm run probe        # console-error probe across every page
 npm run art          # regenerate all SVG artwork
+```
+
+`BASE_URL` overrides the target for `e2e` and `probe`, so the same tests can be pointed at the live site:
+
+```bash
+BASE_URL=https://dabara-hotel-and-suite.vercel.app npm run e2e
 ```
 
 ---
@@ -266,6 +274,8 @@ npm run art
 
 The site is fully static, so any static host works.
 
+**Live site:** <https://dabara-hotel-and-suite.vercel.app>
+
 **Vercel**
 
 ```bash
@@ -274,6 +284,8 @@ npx vercel --prod   # production
 ```
 
 `vercel.json` enables clean URLs, adds security headers and sets cache rules for the artwork.
+
+The Vercel project (`great-innovators/dabara-hotel-and-suite`) is connected to the GitHub repository, so every push to `main` deploys automatically — no build command, output directory is the repository root.
 
 **GitHub Pages / Netlify / Cloudflare Pages**
 

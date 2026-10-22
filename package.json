@@ -10,6 +10,7 @@
     "art": "node tools/generate-art.js",
     "test": "node tools/smoke-test.js",
     "e2e": "node tools/e2e.js",
+    "probe": "node tools/probe.js",
     "check": "node --check js/main.js && node --check js/home.js && node --check js/rooms.js && node --check js/room.js && node --check js/booking.js && node --check js/my-bookings.js && node --check js/services.js && node --check js/contact.js && node --check js/admin.js && node --check js/data.js && node --check js/catalogue.js && node --check js/rooms-store.js && node --check js/storage.js && node --check js/utils.js && node --check js/icons.js && node --check tools/generate-art.js && node --check tools/smoke-test.js && node --check tools/e2e.js"
   },
   "license": "MIT"
