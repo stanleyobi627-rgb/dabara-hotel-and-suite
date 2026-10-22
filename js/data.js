@@ -1,7 +1,8 @@
-import { ROOMS as CATALOGUE } from "./catalogue.js";
+import { ROOMS as CATALOGUE, CATALOGUE_VERSION } from "./catalogue.js";
 
 export { CATALOGUE };
 export const ROOMS = CATALOGUE;
+export { CATALOGUE_VERSION };
 
 export const HOTEL = {
   name: "Dabara Hotel and Suites",
@@ -162,13 +163,13 @@ export const REVIEWS = [
     name: "Chinedu O.",
     role: "Business traveller",
     rating: 5,
-    text: "The Executive Suite is the most comfortable room I have booked in Nnewi. The 24-hour power and the card-key system make a long working week easy, and the gym is open whenever you need it.",
+    text: "The Dabara Executive Suite is the most comfortable room I have booked in Nnewi. The 24-hour power and the card-key system make a long working week easy, and the gym is open whenever you need it.",
   },
   {
     name: "Amaka E.",
     role: "Family stay",
     rating: 5,
-    text: "We booked the Family Suite for a visit to Onitsha. Enough space for five, and the outdoor pool plus the hot tub kept the children busy all afternoon. The staff are genuinely warm.",
+    text: "We booked the Premium Executive for a visit to Onitsha. Enough space for the whole family, and the outdoor pool plus the hot tub kept the children busy all afternoon. The staff are genuinely warm.",
   },
   {
     name: "Ibrahim S.",
@@ -187,6 +188,36 @@ export const REVIEWS = [
     role: "Long stay",
     rating: 5,
     text: "Stayed six weeks while working on a project in Nnewi. Laundry, the kitchenette and reliable Wi-Fi made it feel like home. Best value in town for a long stay.",
+  },
+  {
+    name: "Ngozi U.",
+    role: "Couples’ getaway",
+    rating: 5,
+    text: "We took the Premium Executive for our anniversary and it was worth every naira. The private lounge and the terrace with the view of Nnewi at night is the kind of thing you remember. The hot tub was the best part.",
+  },
+  {
+    name: "Emeka I.",
+    role: "Conference guest",
+    rating: 4,
+    text: "Came in for a two-day conference and booked the Dabara Executive Suite. The work desk, the Wi-Fi and the 24-hour power made the presentations painless, and the restaurant downstairs meant I never had to leave the building.",
+  },
+  {
+    name: "Blessing M.",
+    role: "Solo traveller",
+    rating: 5,
+    text: "A clean, quiet Deluxe room for the night I was in Nnewi for a wedding. The bed was excellent, the bathroom had a proper hot shower, and the free parking took the stress out of arriving late.",
+  },
+  {
+    name: "Obinna K.",
+    role: "Repeat guest",
+    rating: 5,
+    text: "This is my third stay at Dabara. Same welcome at reception, same clean room, same warm breakfast. The staff know me by name now, which is why I keep coming back instead of trying somewhere new.",
+  },
+  {
+    name: "Ifeoma D.",
+    role: "Event host",
+    rating: 4,
+    text: "We hosted a birthday dinner for sixty people. The event space handled it, the food arrived on time and the staff kept the bar topped up without being asked. Only wish the parking filled up faster.",
   },
 ];
 

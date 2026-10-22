@@ -1,4 +1,7 @@
-import { HOTEL, EXTRAS } from "./data.js";
+import { EXTRAS } from "./data.js";
+import { getHotel } from "./hotel-store.js";
+
+const HOTEL = getHotel();
 import { getRoom, getRooms } from "./rooms-store.js";
 import { bookings, guest } from "./storage.js";
 import {

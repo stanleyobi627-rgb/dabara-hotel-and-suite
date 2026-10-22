@@ -14,7 +14,7 @@ export function getRooms() {
   return stored;
 }
 
-export function getRoom(id, fallbackIndex = 2) {
+export function getRoom(id, fallbackIndex = 0) {
   const list = getRooms();
   return list.find((room) => room.id === id) || list[fallbackIndex] || list[0] || null;
 }

@@ -1,4 +1,5 @@
 import { HOTEL, AMENITIES, ROOMS } from "./data.js";
+import { getHotel } from "./hotel-store.js";
 import { admin, bookings, enquiries, KEYS, remove, theme } from "./storage.js";
 import {
   availableUnits,
@@ -32,8 +33,7 @@ function currentRooms() {
 }
 
 function effectiveHotel() {
-  const info = admin.hotelInfo();
-  return { ...HOTEL, ...(info || {}) };
+  return getHotel();
 }
 
 function statusBadge(status) {
@@ -383,7 +383,7 @@ function readRoomForm(id) {
 
   return {
     name: value("name").trim() || "Untitled room",
-    type: value("type").trim() || "Standard Room",
+    type: value("type").trim() || "Deluxe",
     rate: Math.max(0, Number(value("rate")) || 0),
     units: Math.max(0, Number(value("units")) || 0),
     size: Math.max(0, Number(value("size")) || 0),
@@ -434,8 +434,8 @@ function addRoom() {
   list.push({
     id,
     name: "New Room Type",
-    type: "Standard Room",
-    rate: 40000,
+    type: "Deluxe",
+    rate: 60000,
     size: 26,
     beds: "1 Queen bed",
     maxGuests: 2,
@@ -446,7 +446,7 @@ function addRoom() {
     reviews: 0,
     tag: "",
     amenities: ["wifi", "ac", "tv", "bath", "power", "keycard"],
-    image: "images/room-standard.svg",
+    image: "images/room-deluxe.svg",
     description: "Describe this room type for guests.",
   });
   admin.saveRooms(list);
@@ -518,7 +518,7 @@ function importCatalogue(input) {
       parsed.forEach((room, i) => {
         if (!room.id) room.id = `room-${i}-${Math.random().toString(36).slice(2, 7)}`;
         if (!room.name) room.name = "Untitled room";
-        if (!room.type) room.type = "Standard Room";
+        if (!room.type) room.type = "Deluxe";
         room.rate = Number(room.rate) || 0;
         room.units = Number(room.units) || 0;
         room.maxGuests = Number(room.maxGuests) || 1;
@@ -526,7 +526,7 @@ function importCatalogue(input) {
         room.reviews = Number(room.reviews) || 0;
         room.rating = Number(room.rating) || 0;
         room.amenities = Array.isArray(room.amenities) ? room.amenities : [];
-        room.image = room.image || "images/room-standard.svg";
+        room.image = room.image || "images/room-deluxe.svg";
         room.description = room.description || "";
       });
       admin.saveRooms(parsed);
@@ -595,6 +595,15 @@ function renderSettings() {
   qs("#infoAddress").value = info.address;
   qs("#infoCheckIn").value = info.checkInTime;
   qs("#infoCheckOut").value = info.checkOutTime;
+  const hint = qs("#infoEmailHint");
+  if (info.email === HOTEL.email) {
+    hint.innerHTML =
+      'Still the placeholder address. Replace it with a mailbox the front desk actually reads, or nobody will receive the messages.';
+    hint.className = "field__hint field__hint--warn";
+  } else {
+    hint.textContent = "Used by the Get in touch page, the footer and booking confirmations.";
+    hint.className = "field__hint";
+  }
 }
 
 /* ---------- tabs ---------- */
@@ -731,6 +740,7 @@ function init() {
   qs("#resetRooms").addEventListener("click", () => {
     if (!window.confirm("Reset all room rates, counts and photos to defaults?")) return;
     remove(KEYS.adminRooms);
+    remove(KEYS.adminRoomsVersion);
     renderRooms();
     renderOverview();
     toast("Rooms reset to defaults.");
@@ -751,11 +761,19 @@ function init() {
       checkOutTime: qs("#infoCheckOut").value.trim(),
     });
     toast("Hotel information saved.", "success");
+    renderSettings();
+  });
+
+  qs("#resetInfo").addEventListener("click", () => {
+    if (!window.confirm("Restore the published phone, email, address and check-in times?")) return;
+    remove(KEYS.hotelInfo);
+    renderSettings();
+    toast("Hotel information reset to the published details.");
   });
 
   qs("#clearData").addEventListener("click", () => {
     if (!window.confirm("This removes every booking, enquiry and room change. Continue?")) return;
-    [KEYS.bookings, KEYS.enquiries, KEYS.adminRooms, KEYS.hotelInfo, KEYS.guest, KEYS.favourites].forEach(
+    [KEYS.bookings, KEYS.enquiries, KEYS.adminRooms, KEYS.adminRoomsVersion, KEYS.hotelInfo, KEYS.guest, KEYS.favourites].forEach(
       (key) => remove(key),
     );
     toast("All local data cleared.");

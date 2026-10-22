@@ -1,3 +1,5 @@
+import { CATALOGUE_VERSION } from "./catalogue.js";
+
 const PREFIX = "dabara_";
 
 export const KEYS = {
@@ -6,6 +8,7 @@ export const KEYS = {
   favourites: `${PREFIX}favourites`,
   theme: `${PREFIX}theme`,
   adminRooms: `${PREFIX}admin_rooms`,
+  adminRoomsVersion: `${PREFIX}admin_rooms_version`,
   hotelInfo: `${PREFIX}hotel_info`,
   enquiries: `${PREFIX}enquiries`,
   session: `${PREFIX}session`,
@@ -108,9 +111,15 @@ export const theme = {
 export const admin = {
   rooms() {
     const list = read(KEYS.adminRooms, null);
-    return Array.isArray(list) ? list : null;
+    if (!Array.isArray(list)) return null;
+    /* Ignore dashboard edits saved against an older catalogue — the room
+       types they refer to may no longer exist. */
+    const version = read(KEYS.adminRoomsVersion, 1);
+    if (version !== CATALOGUE_VERSION) return null;
+    return list;
   },
   saveRooms(list) {
+    write(KEYS.adminRoomsVersion, CATALOGUE_VERSION);
     return write(KEYS.adminRooms, list);
   },
   hotelInfo() {

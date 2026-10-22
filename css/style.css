@@ -720,6 +720,10 @@ p {
   margin-top: 6px;
 }
 
+.field__hint--warn {
+  color: var(--danger);
+}
+
 .input,
 .select,
 .textarea {

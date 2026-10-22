@@ -172,21 +172,21 @@ Open `js/catalogue.js` and change the numbers. One array, one room per object:
 ```js
 export const ROOMS = [
   {
-    id: "standard",          // used in links — do not change once published
-    name: "Standard Room",
-    type: "Standard Room",
-    rate: 38000,             // price per night
-    units: 18,               // how many of this room the hotel has
-    size: 24,                // m²
-    beds: "1 Queen bed",
+    id: "deluxe",             // used in links — do not change once published
+    name: "Deluxe",
+    type: "Deluxe",
+    rate: 60000,              // price per night
+    units: 40,                // how many of this room the hotel has
+    size: 32,                 // m²
+    beds: "1 King bed",
     maxGuests: 2,
-    floor: 2,
-    view: "Courtyard view",
-    rating: 4.2,
-    reviews: 52,
-    tag: "Best value",       // ribbon on the card
+    floor: 3,
+    view: "Main road view",
+    rating: 4.3,
+    reviews: 146,
+    tag: "Popular",            // ribbon on the card
     amenities: ["wifi", "ac", "tv", "bath", "power", "keycard"],
-    image: "images/room-standard.svg",
+    image: "images/room-deluxe.svg",
     description: "Shown on the room card and booking page.",
   },
 ];
@@ -214,13 +214,11 @@ The dashboard covers:
 
 | Room type | Rate / night | Size | Beds | Sleeps | Units |
 | --- | --- | --- | --- | --- | --- |
-| Standard Room | ₦38,000 | 24 m² | 1 Queen | 2 | 18 |
-| Standard Twin | ₦42,000 | 24 m² | 2 Single | 2 | 12 |
-| Deluxe Room | ₦60,000 | 32 m² | 1 King | 2 | 14 |
-| Deluxe Garden View | ₦68,000 | 34 m² | 1 King + daybed | 3 | 8 |
-| Family Suite | ₦85,000 | 46 m² | 2 King | 5 | 5 |
-| Executive Suite | ₦95,000 | 52 m² | 1 King + sofa bed | 4 | 8 |
-| Presidential Suite | ₦180,000 | 95 m² | 2 King | 6 | 3 |
+| Deluxe | ₦60,000 | 32 m² | 1 King | 2 | 40 |
+| Premium Executive | ₦75,000 | 95 m² | 2 King | 6 | 8 |
+| Dabara Executive Suite | ₦90,000 | 52 m² | 1 King + sofa bed | 4 | 20 |
+
+Dabara Hotel and Suites has three room categories and 68 rooms in total.
 
 **68 rooms in total.** Check-in from 2:00 PM, check-out by 11:00 AM. Guest rating 4.4 from 248 reviews.
 

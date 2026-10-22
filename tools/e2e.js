@@ -190,7 +190,7 @@ checkTrue(
 
 /* 2. rooms page filtering */
 await cdp.goto(`${BASE}/rooms.html`);
-check("rooms: all 7 types listed", await cdp.evaluate('document.querySelectorAll("#room-grid .card").length'), 7);
+check("rooms: all 3 categories listed", await cdp.evaluate('document.querySelectorAll("#room-grid .card").length'), 3);
 await cdp.evaluate(`
   (() => {
     const sel = document.querySelector("#price");
@@ -200,7 +200,7 @@ await cdp.evaluate(`
   })()
 `);
 await sleep(400);
-check("rooms: price filter applies", await cdp.evaluate('document.querySelectorAll("#room-grid .card").length'), 4);
+check("rooms: price filter applies", await cdp.evaluate('document.querySelectorAll("#room-grid .card").length'), 1);
 checkTrue("rooms: url reflects filters", await cdp.evaluate('location.search.includes("price=70000")'));
 
 /* 3. booking flow */
@@ -225,7 +225,7 @@ await sleep(300);
 const subtotalText = await cdp.evaluate(
   '[...document.querySelectorAll(".summary__row strong")].map(e=>e.textContent).find(t=>t.includes("\\u20A6"))',
 );
-check("booking: 2 rooms x 3 nights priced", subtotalText, "₦570,000");
+check("booking: 2 rooms x 3 nights priced", subtotalText, "₦540,000");
 
 await cdp.evaluate(`
   (() => {
@@ -265,7 +265,7 @@ check("booking: one booking stored", await cdp.evaluate('JSON.parse(localStorage
 const stored = await cdp.evaluate('JSON.parse(localStorage.getItem("dabara_bookings"))[0]');
 check("booking: 2 rooms recorded", stored.quantity, 2);
 check("booking: 3 nights recorded", stored.nights, 3);
-check("booking: total recorded", stored.total, Math.round((570000 - 57000) * 1.075));
+check("booking: total recorded", stored.total, Math.round((540000 - 54000) * 1.075));
 check("booking: promo recorded", stored.promoCode, "DABARA10");
 check("booking: guest recorded", stored.firstName, "Ada");
 
@@ -290,7 +290,7 @@ await cdp.evaluate(`
   })()
 `);
 await sleep(400);
-check("rooms: cancelled booking frees the unit again", await cdp.evaluate('document.querySelectorAll("#room-grid .card").length'), 7);
+check("rooms: cancelled booking frees the unit again", await cdp.evaluate('document.querySelectorAll("#room-grid .card").length'), 3);
 
 /* 6. admin dashboard */
 await cdp.goto(`${BASE}/admin.html`);
@@ -318,7 +318,7 @@ await sleep(300);
 check("admin: bookings table rendered", await cdp.evaluate('document.querySelectorAll("#bookingsTable tbody tr").length'), 1);
 await cdp.evaluate('document.querySelector("[data-tab=\\"rooms\\"]").click()');
 await sleep(300);
-check("admin: room cards rendered", await cdp.evaluate('document.querySelectorAll("#roomsGrid [data-room]").length'), 7);
+check("admin: room cards rendered", await cdp.evaluate('document.querySelectorAll("#roomsGrid [data-room]").length'), 3);
 check(
   "admin: room summary totals 68 rooms",
   await cdp.evaluate('document.querySelector("#roomsSummary").textContent.includes("68")'),
@@ -328,9 +328,9 @@ check(
 /* 6b. the dashboard can re-price the hotel and the public site follows */
 await cdp.evaluate(`
   (() => {
-    const panel = document.querySelector('[data-room="standard"]');
+    const panel = document.querySelector('[data-room="deluxe"]');
     panel.querySelector('[data-f="rate"]').value = "41000";
-    panel.querySelector('[data-save-room="standard"]').click();
+    panel.querySelector('[data-save-room="deluxe"]').click();
   })()
 `);
 await sleep(400);
@@ -351,10 +351,10 @@ await cdp.evaluate('document.querySelector("[data-tab=\\"rooms\\"]").click()');
 await sleep(300);
 await cdp.evaluate('document.querySelector("#addRoom").click()');
 await sleep(400);
-check("admin: room type added", await cdp.evaluate('document.querySelectorAll("#roomsGrid [data-room]").length'), 8);
+check("admin: room type added", await cdp.evaluate('document.querySelectorAll("#roomsGrid [data-room]").length'), 4);
 await cdp.evaluate('document.querySelector("#resetRooms").click()');
 await sleep(400);
-check("admin: reset restores 7 room types", await cdp.evaluate('document.querySelectorAll("#roomsGrid [data-room]").length'), 7);
+check("admin: reset restores 3 room categories", await cdp.evaluate('document.querySelectorAll("#roomsGrid [data-room]").length'), 3);
 check(
   "admin: reset restores the default rate",
   await cdp.evaluate('JSON.parse(localStorage.getItem("dabara_admin_rooms") || "null") === null'),
@@ -363,6 +363,44 @@ check(
 await cdp.evaluate('document.querySelector("[data-tab=\\"settings\\"]").click()');
 await sleep(300);
 check("admin: settings pre-filled", await cdp.evaluate('document.querySelector("#infoPhone").value.length > 0'), true);
+
+/* 6d. the dashboard email edit reaches the public pages */
+await cdp.evaluate(`
+  (() => {
+    document.querySelector("#infoEmail").value = "frontdesk@dabara.test";
+    document.querySelector("#infoPhone").value = "+234 806 000 1111";
+    document.querySelector("#infoForm").dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+  })()
+`);
+await sleep(300);
+await cdp.goto(`${BASE}/contact.html`);
+await sleep(400);
+checkTrue(
+  "contact: dashboard email shows on the get in touch page",
+  await cdp.evaluate('document.querySelector("#contact-cards").textContent.includes("frontdesk@dabara.test")'),
+);
+checkTrue(
+  "contact: mailto uses the dashboard email",
+  await cdp.evaluate('document.querySelector("#contact-cards a[href^=\\"mailto:\\"]").getAttribute("href").includes("frontdesk@dabara.test")'),
+);
+checkTrue(
+  "footer: dashboard email shows in the footer",
+  await cdp.evaluate('document.querySelector(".site-footer").textContent.includes("frontdesk@dabara.test")'),
+);
+checkTrue(
+  "contact: dashboard phone is dialled as a number",
+  await cdp.evaluate('document.querySelector("#contact-cards a[href^=\\"tel:\\"]").getAttribute("href") === "tel:+2348060001111"'),
+);
+await cdp.goto(`${BASE}/admin.html`);
+await sleep(300);
+await cdp.evaluate('document.querySelector("[data-tab=\\"settings\\"]").click()');
+await sleep(300);
+await cdp.evaluate('document.querySelector("#resetInfo").click()');
+await sleep(300);
+checkTrue(
+  "admin: reset restores the published email",
+  await cdp.evaluate('document.querySelector("#infoEmail").value !== "frontdesk@dabara.test"'),
+);
 
 /* 7. theme toggle */
 await cdp.goto(`${BASE}/index.html`);

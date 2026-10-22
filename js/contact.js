@@ -1,4 +1,7 @@
-import { HOTEL, FAQ } from "./data.js";
+import { FAQ } from "./data.js";
+import { getHotel } from "./hotel-store.js";
+
+const HOTEL = getHotel();
 import { enquiries } from "./storage.js";
 import { escapeHtml, qs, toast } from "./utils.js";
 import { icon } from "./icons.js";

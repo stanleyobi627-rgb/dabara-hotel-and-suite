@@ -151,6 +151,7 @@
               <label class="field">
                 <span class="field__label">Email address</span>
                 <input class="input" type="email" id="infoEmail" required />
+                <span class="field__hint" id="infoEmailHint"></span>
               </label>
               <label class="field field--full">
                 <span class="field__label">Address</span>
@@ -166,6 +167,9 @@
               </label>
               <div class="field--full">
                 <button class="btn" type="submit">Save hotel information</button>
+                <button class="btn btn--ghost btn--sm" type="button" id="resetInfo">
+                  Reset to published details
+                </button>
               </div>
             </form>
             <p class="text-xs muted">

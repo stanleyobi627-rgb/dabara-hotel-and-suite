@@ -1,4 +1,7 @@
-import { HOTEL, AMENITIES } from "./data.js";
+import { AMENITIES } from "./data.js";
+import { getHotel } from "./hotel-store.js";
+
+const HOTEL = getHotel();
 import { getRooms, getRoomTypes } from "./rooms-store.js";
 import { bookings } from "./storage.js";
 import {
@@ -31,7 +34,7 @@ const POLICIES = [
   {
     icon: "shield",
     title: "Cancellation",
-    text: "Free cancellation up to 48 hours before check-in. Inside 48 hours one night is charged, except for Presidential Suite bookings which are non-refundable.",
+    text: "Free cancellation up to 48 hours before check-in. Inside 48 hours one night is charged, except for Premium Executive bookings which are non-refundable.",
   },
   {
     icon: "coffee",

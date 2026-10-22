@@ -1,4 +1,6 @@
-import { HOTEL } from "./data.js";
+import { getHotel } from "./hotel-store.js";
+
+const HOTEL = getHotel();
 import { icon, iconFilled } from "./icons.js";
 import { theme, bookings } from "./storage.js";
 import { qs, qsa } from "./utils.js";

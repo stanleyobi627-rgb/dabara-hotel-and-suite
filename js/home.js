@@ -1,4 +1,7 @@
-import { HOTEL, SERVICES, REVIEWS, FAQ, AMENITIES } from "./data.js";
+import { SERVICES, REVIEWS, FAQ, AMENITIES } from "./data.js";
+import { getHotel } from "./hotel-store.js";
+
+const HOTEL = getHotel();
 import { getRooms, totalReviews, totalUnits } from "./rooms-store.js";
 import { bookings } from "./storage.js";
 import {
@@ -107,7 +110,7 @@ function roomCard(room) {
 }
 
 function renderFeaturedRooms() {
-  const picks = ["deluxe", "executive", "standard"].map((id) => getRooms().find((r) => r.id === id));
+  const picks = ["deluxe", "presidential", "executive"].map((id) => getRooms().find((r) => r.id === id));
   qs("#featured-rooms").innerHTML = picks.filter(Boolean).map(roomCard).join("");
 }
 
@@ -134,7 +137,7 @@ function renderServices() {
 }
 
 function renderReviews() {
-  qs("#review-grid").innerHTML = REVIEWS.slice(0, 3)
+  qs("#review-grid").innerHTML = REVIEWS.slice(0, 6)
     .map(
       (r) => `
       <div class="review">

@@ -47,9 +47,10 @@ function check(label, actual, expected) {
 console.log("\nDabara Hotel and Suites — smoke test\n");
 
 /* data integrity */
-check("7 room types", ROOMS.length, 7);
+check("3 room categories", ROOMS.length, 3);
 check("68 total units", ROOMS.reduce((s, r) => s + r.units, 0), 68);
 check("room ids unique", new Set(ROOMS.map((r) => r.id)).size, ROOMS.length);
+check("room names", ROOMS.map((r) => r.name).join(" / "), "Deluxe / Premium Executive / Dabara Executive Suite");
 check("every room has an image", ROOMS.every((r) => r.image.endsWith(".svg")), true);
 check("every room has amenities", ROOMS.every((r) => r.amenities.length > 0), true);
 check("promo codes unique", new Set(PROMOS.map((p) => p.code)).size, PROMOS.length);
@@ -145,24 +146,24 @@ check("unknown promo ignored", findPromo("NOPE"), null);
 check("multi room multiplies subtotal", calculateTotal({ room: deluxe, checkIn: today, checkOut: tomorrow, quantity: 2, extras: [] }).subtotal, 60000 * 2);
 
 /* availability */
-const standard = ROOMS.find((r) => r.id === "standard");
+const standard = ROOMS.find((r) => r.id === "deluxe");
 check("all units free initially", availableUnits(standard, today, in5, []), standard.units);
 
 const fakeBookings = [
-  { id: "1", roomId: "standard", checkIn: today, checkOut: addDays(today, 2), quantity: 2, status: "confirmed" },
-  { id: "2", roomId: "standard", checkIn: addDays(today, 3), checkOut: addDays(today, 4), quantity: 1, status: "confirmed" },
-  { id: "3", roomId: "standard", checkIn: today, checkOut: in5, quantity: 5, status: "cancelled" },
+  { id: "1", roomId: "deluxe", checkIn: today, checkOut: addDays(today, 2), quantity: 2, status: "confirmed" },
+  { id: "2", roomId: "deluxe", checkIn: addDays(today, 3), checkOut: addDays(today, 4), quantity: 1, status: "confirmed" },
+  { id: "3", roomId: "deluxe", checkIn: today, checkOut: in5, quantity: 5, status: "cancelled" },
 ];
 check("overlapping bookings reduce availability", availableUnits(standard, today, addDays(today, 2), fakeBookings), standard.units - 2);
 check("cancelled bookings are ignored", availableUnits(standard, today, addDays(today, 2), fakeBookings), standard.units - 2);
-check("availability never goes negative", availableUnits(standard, today, in5, fakeBookings.filter((b) => b.status === "confirmed").concat([{ roomId: "standard", checkIn: today, checkOut: in5, quantity: 99, status: "confirmed" }])), 0);
+check("availability never goes negative", availableUnits(standard, today, in5, fakeBookings.filter((b) => b.status === "confirmed").concat([{ roomId: "deluxe", checkIn: today, checkOut: in5, quantity: 99, status: "confirmed" }])), 0);
 
 /* storage */
 const sample = {
   id: "bk_1",
   code: bookingCode(),
   roomId: "deluxe",
-  roomName: "Deluxe Room",
+  roomName: "Deluxe",
   checkIn: today,
   checkOut: in5,
   total: 1000,
@@ -170,7 +171,7 @@ const sample = {
 };
 bookings.add(sample);
 check("booking saved", bookings.all().length, 1);
-check("booking retrievable by id", bookings.get("bk_1").roomName, "Deluxe Room");
+check("booking retrievable by id", bookings.get("bk_1").roomName, "Deluxe");
 bookings.update("bk_1", { status: "cancelled" });
 check("booking updated", bookings.get("bk_1").status, "cancelled");
 check("cancelled booking still listed", bookings.all().length, 1);

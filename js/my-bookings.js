@@ -1,4 +1,6 @@
-import { HOTEL } from "./data.js";
+import { getHotel } from "./hotel-store.js";
+
+const HOTEL = getHotel();
 import { bookings } from "./storage.js";
 import {
   calendarEvent,
