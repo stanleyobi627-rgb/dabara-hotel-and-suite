@@ -2,16 +2,16 @@
   
   <defs>
     <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#eef4ea"/>
-      <stop offset="1" stop-color="#dfe9d9"/>
+      <stop offset="0" stop-color="#eaf0f4"/>
+      <stop offset="1" stop-color="#d9e3e9"/>
     </linearGradient>
     <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#c2a882"/>
       <stop offset="1" stop-color="#a2875f"/>
     </linearGradient>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#bfe0c6"/>
-      <stop offset="1" stop-color="#e9f5e6"/>
+      <stop offset="0" stop-color="#bfcfe0"/>
+      <stop offset="1" stop-color="#e6eff5"/>
     </linearGradient>
     <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#e7f3c9" stop-opacity="0.5"/>
@@ -24,8 +24,8 @@
   </defs>
   <rect width="800" height="600" fill="url(#wall)"/>
   <rect y="420" width="800" height="180" fill="url(#floor)"/>
-  <rect y="414" width="800" height="10" fill="#5d6b4b" opacity="0.35"/>
-  <g opacity="0.16" stroke="#5d6b4b" stroke-width="2">
+  <rect y="414" width="800" height="10" fill="#4b606b" opacity="0.35"/>
+  <g opacity="0.16" stroke="#4b606b" stroke-width="2">
     <path d="M0 470 H800 M0 520 H800 M0 570 H800"/>
     <path d="M90 420 L40 600 M300 420 L275 600 M520 420 L545 600 M720 420 L770 600"/>
   </g>
@@ -33,28 +33,28 @@
     <g>
       <rect x="60" y="96" width="210" height="200" fill="url(#sky)"/>
       <circle cx="211.2" cy="152" r="14.700000000000001" fill="#f5e08d" opacity="0.85"/>
-      <path d="M60 296 L123 206 L175.5 296 Z" fill="#3f7a4e" opacity="0.6"/>
-      <path d="M154.5 296 L223.8 180 L270 296 Z" fill="#3f7a4e" opacity="0.45"/>
-      <rect x="162" y="96" width="6" height="200" fill="#33402f"/><rect x="60" y="193" width="210" height="6" fill="#33402f"/>
-      <rect x="60" y="96" width="210" height="200" fill="none" stroke="#33402f" stroke-width="10"/>
+      <path d="M60 296 L123 206 L175.5 296 Z" fill="#3f5b7a" opacity="0.6"/>
+      <path d="M154.5 296 L223.8 180 L270 296 Z" fill="#3f5b7a" opacity="0.45"/>
+      <rect x="162" y="96" width="6" height="200" fill="#2f3940"/><rect x="60" y="193" width="210" height="6" fill="#2f3940"/>
+      <rect x="60" y="96" width="210" height="200" fill="none" stroke="#2f3940" stroke-width="10"/>
       <rect x="60" y="96" width="210" height="200" fill="url(#glass)"/>
-      <rect x="46" y="296" width="238" height="14" rx="4" fill="#33402f"/>
+      <rect x="46" y="296" width="238" height="14" rx="4" fill="#2f3940"/>
     </g>
   
     <g>
-      <rect x="600" y="110" width="118" height="86" rx="6" fill="#33402f"/>
-      <rect x="609" y="119" width="100" height="68" rx="3" fill="#f3f8ee"/>
+      <rect x="600" y="110" width="118" height="86" rx="6" fill="#2f3940"/>
+      <rect x="609" y="119" width="100" height="68" rx="3" fill="#eef4f8"/>
       <circle cx="640" cy="146" r="12" fill="#c9a227"/>
-      <path d="M609 187 L644 150 L674 187 Z" fill="#3f7a4e"/>
+      <path d="M609 187 L644 150 L674 187 Z" fill="#3f5b7a"/>
     </g>
-  <ellipse cx="430" cy="470" rx="260" ry="57.2" fill="#9db87e" opacity="0.65"/>
+  <ellipse cx="430" cy="470" rx="260" ry="57.2" fill="#7ea4b8" opacity="0.65"/>
   
   
     <g>
-      <rect x="290" y="240" width="360" height="120" rx="10" fill="#5d6b4b"/>
+      <rect x="290" y="240" width="360" height="120" rx="10" fill="#4b606b"/>
       <rect x="300" y="316" width="340" height="120" rx="10" fill="#fdfbf5"/>
-      <rect x="294" y="390.8" width="352" height="85.2" rx="8" fill="#8fae72"/>
-      <rect x="294" y="390.8" width="352" height="16" rx="6" fill="#6f9153"/>
+      <rect x="294" y="390.8" width="352" height="85.2" rx="8" fill="#7299ae"/>
+      <rect x="294" y="390.8" width="352" height="16" rx="6" fill="#537a91"/>
       <rect x="326" y="306" width="136" height="40" rx="16" fill="#fdfbf5"/><rect x="482.4" y="306" width="136" height="40" rx="16" fill="#fdfbf5"/>
       <rect x="306" y="470" width="12" height="26" rx="5" fill="#8a6f4c"/>
       <rect x="622" y="470" width="12" height="26" rx="5" fill="#8a6f4c"/>
@@ -75,9 +75,9 @@
   </g>
   
     <g transform="translate(724 470) scale(0.95)">
-      <path d="M0 0 C -26 -40 -30 -74 -6 -104 C 4 -74 8 -36 0 0 Z" fill="#2c6b3f"/>
-      <path d="M0 0 C 26 -44 34 -76 10 -110 C 0 -76 -8 -38 0 0 Z" fill="#3a8250"/>
-      <path d="M0 0 C -10 -46 -4 -84 0 -120 C 6 -84 12 -46 0 0 Z" fill="#215734"/>
+      <path d="M0 0 C -26 -40 -30 -74 -6 -104 C 4 -74 8 -36 0 0 Z" fill="#2c496b"/>
+      <path d="M0 0 C 26 -44 34 -76 10 -110 C 0 -76 -8 -38 0 0 Z" fill="#3a5b82"/>
+      <path d="M0 0 C -10 -46 -4 -84 0 -120 C 6 -84 12 -46 0 0 Z" fill="#213957"/>
       <path d="M-24 0 h48 l-6 40 h-36 Z" fill="#b9704a"/>
       <rect x="-26" y="-6" width="52" height="10" rx="4" fill="#915234"/>
     </g>

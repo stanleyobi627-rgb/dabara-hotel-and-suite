@@ -123,7 +123,7 @@ function footerMarkup() {
 function applyTheme(mode) {
   document.documentElement.setAttribute("data-theme", mode);
   const meta = qs('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", mode === "dark" ? "#0f1412" : "#faf6ef");
+  if (meta) meta.setAttribute("content", mode === "dark" ? "#0b1220" : "#faf7f1");
 }
 
 export function initChrome() {

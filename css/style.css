@@ -5,25 +5,25 @@
 
 /* ---------- 1. Tokens ---------- */
 :root {
-  --bg: #faf6ef;
-  --bg-alt: #f3ece0;
+  --bg: #faf7f1;
+  --bg-alt: #f2ece0;
   --surface: #ffffff;
-  --surface-2: #f7f1e6;
-  --text: #23262b;
-  --text-soft: #4b5058;
-  --muted: #6c7078;
-  --line: rgba(35, 38, 43, 0.12);
-  --line-strong: rgba(35, 38, 43, 0.22);
+  --surface-2: #f6f1e7;
+  --text: #22262d;
+  --text-soft: #4a505a;
+  --muted: #6b7079;
+  --line: rgba(34, 38, 45, 0.12);
+  --line-strong: rgba(34, 38, 45, 0.22);
 
-  --primary: #1f3d2b;
-  --primary-2: #2e5a3e;
-  --primary-soft: rgba(31, 61, 43, 0.08);
+  --primary: #16304f;
+  --primary-2: #24476f;
+  --primary-soft: rgba(22, 48, 79, 0.08);
   --on-primary: #f6f2e9;
 
   --accent: #c9a227;
   --accent-2: #e0c15c;
   --accent-soft: rgba(201, 162, 39, 0.16);
-  --on-accent: #23262b;
+  --on-accent: #22262d;
 
   --danger: #b42318;
   --danger-soft: rgba(180, 35, 24, 0.1);
@@ -39,9 +39,9 @@
   --radius-lg: 22px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 2px 10px rgba(31, 61, 43, 0.06);
-  --shadow: 0 10px 30px rgba(31, 61, 43, 0.09);
-  --shadow-lg: 0 24px 60px rgba(31, 61, 43, 0.16);
+  --shadow-sm: 0 2px 10px rgba(22, 48, 79, 0.06);
+  --shadow: 0 10px 30px rgba(22, 48, 79, 0.09);
+  --shadow-lg: 0 24px 60px rgba(22, 48, 79, 0.16);
 
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
   --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Roboto, Arial, sans-serif;
@@ -52,23 +52,23 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0f1412;
-  --bg-alt: #121917;
-  --surface: #17201c;
-  --surface-2: #1e2924;
+  --bg: #0b1220;
+  --bg-alt: #0e1728;
+  --surface: #111c30;
+  --surface-2: #18253d;
   --text: #ece7dc;
-  --text-soft: #c8c2b5;
-  --muted: #9da9a2;
+  --text-soft: #c6cbd6;
+  --muted: #98a3b8;
   --line: rgba(236, 231, 220, 0.14);
   --line-strong: rgba(236, 231, 220, 0.26);
 
-  --primary: #2e5a3e;
-  --primary-2: #3c7350;
+  --primary: #2a4a7a;
+  --primary-2: #3a6099;
   --primary-soft: rgba(236, 231, 220, 0.1);
   --on-primary: #f6f2e9;
 
-  --accent: #d9b64a;
-  --accent-2: #e8ca6d;
+  --accent: #dcb85a;
+  --accent-2: #ecca70;
   --accent-soft: rgba(217, 182, 74, 0.18);
 
   --danger: #f28a80;
@@ -588,7 +588,7 @@ p {
 .hero {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(160deg, var(--primary) 0%, #16301f 60%, #0f2418 100%);
+  background: linear-gradient(160deg, var(--primary) 0%, #0e2039 60%, #081320 100%);
   color: var(--on-primary);
   padding: clamp(70px, 10vw, 130px) 0 clamp(60px, 8vw, 100px);
 }
@@ -1092,7 +1092,7 @@ p {
 
 /* ---------- 10. Page header (inner pages) ---------- */
 .page-head {
-  background: linear-gradient(150deg, var(--primary) 0%, #16301f 100%);
+  background: linear-gradient(150deg, var(--primary) 0%, #0e2039 100%);
   color: var(--on-primary);
   padding: clamp(44px, 6vw, 76px) 0;
 }
@@ -1686,7 +1686,7 @@ table.data tbody tr:hover {
   display: grid;
   place-items: center;
   padding: 30px;
-  background: linear-gradient(150deg, var(--primary) 0%, #16301f 100%);
+  background: linear-gradient(150deg, var(--primary) 0%, #0e2039 100%);
 }
 
 .login-card {
@@ -1989,7 +1989,7 @@ table.data tbody tr:hover {
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(15, 20, 18, 0.55);
+  background: rgba(8, 14, 24, 0.55);
   display: grid;
   place-items: center;
   padding: 22px;

@@ -28,8 +28,8 @@
     <g>
       <rect x="500" y="90" width="230" height="200" fill="url(#sky)"/>
       <circle cx="665.6" cy="146" r="16.1" fill="#f5d98d" opacity="0.85"/>
-      <path d="M500 290 L569 200 L626.5 290 Z" fill="#6f8d68" opacity="0.6"/>
-      <path d="M603.5 290 L679.4 174 L730 290 Z" fill="#6f8d68" opacity="0.45"/>
+      <path d="M500 290 L569 200 L626.5 290 Z" fill="#687d8d" opacity="0.6"/>
+      <path d="M603.5 290 L679.4 174 L730 290 Z" fill="#687d8d" opacity="0.45"/>
       <rect x="612" y="90" width="6" height="200" fill="#3a2c20"/><rect x="500" y="187" width="230" height="6" fill="#3a2c20"/>
       <rect x="500" y="90" width="230" height="200" fill="none" stroke="#3a2c20" stroke-width="10"/>
       <rect x="500" y="90" width="230" height="200" fill="url(#glass)"/>
@@ -55,13 +55,13 @@
       <rect x="90" y="96" width="118" height="86" rx="6" fill="#3a2c20"/>
       <rect x="99" y="105" width="100" height="68" rx="3" fill="#fdf4e6"/>
       <circle cx="130" cy="132" r="12" fill="#c96a4a"/>
-      <path d="M99 173 L134 136 L164 173 Z" fill="#2e5a3e"/>
+      <path d="M99 173 L134 136 L164 173 Z" fill="#2e425a"/>
     </g>
   
     <g transform="translate(720 470) scale(0.9)">
-      <path d="M0 0 C -26 -40 -30 -74 -6 -104 C 4 -74 8 -36 0 0 Z" fill="#27603f"/>
-      <path d="M0 0 C 26 -44 34 -76 10 -110 C 0 -76 -8 -38 0 0 Z" fill="#34754f"/>
-      <path d="M0 0 C -10 -46 -4 -84 0 -120 C 6 -84 12 -46 0 0 Z" fill="#1e4c35"/>
+      <path d="M0 0 C -26 -40 -30 -74 -6 -104 C 4 -74 8 -36 0 0 Z" fill="#274060"/>
+      <path d="M0 0 C 26 -44 34 -76 10 -110 C 0 -76 -8 -38 0 0 Z" fill="#345075"/>
+      <path d="M0 0 C -10 -46 -4 -84 0 -120 C 6 -84 12 -46 0 0 Z" fill="#1e314c"/>
       <path d="M-24 0 h48 l-6 40 h-36 Z" fill="#a9603c"/>
       <rect x="-26" y="-6" width="52" height="10" rx="4" fill="#82462a"/>
     </g>

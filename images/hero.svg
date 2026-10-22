@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" width="800" height="620" role="img">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#2e5a3e"/>
-      <stop offset="1" stop-color="#14301f"/>
+      <stop offset="0" stop-color="#2e425a"/>
+      <stop offset="1" stop-color="#142030"/>
     </linearGradient>
     <linearGradient id="win" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#f0c98f"/>
@@ -23,10 +23,10 @@
   </g>
 
   <g opacity="0.9">
-    <rect x="430" y="150" width="250" height="200" rx="12" fill="#0f2418" opacity="0.55"/>
-    <rect x="452" y="172" width="206" height="156" rx="8" fill="#16301f"/>
+    <rect x="430" y="150" width="250" height="200" rx="12" fill="#0f1824" opacity="0.55"/>
+    <rect x="452" y="172" width="206" height="156" rx="8" fill="#162230"/>
     <circle cx="640" cy="250" r="42" fill="#c9a227" opacity="0.85"/>
-    <path d="M470 300 q60 -70 120 -30 q40 26 68 -10 v68 H470 Z" fill="#2e5a3e"/>
+    <path d="M470 300 q60 -70 120 -30 q40 26 68 -10 v68 H470 Z" fill="#2e425a"/>
   </g>
 
   <g>
@@ -39,8 +39,8 @@
   </g>
 
   <g>
-    <rect x="560" y="330" width="170" height="120" rx="14" fill="#3c7350"/>
-    <rect x="560" y="330" width="170" height="44" rx="14" fill="#2e5a3e"/>
+    <rect x="560" y="330" width="170" height="120" rx="14" fill="#3c5573"/>
+    <rect x="560" y="330" width="170" height="44" rx="14" fill="#2e425a"/>
     <rect x="586" y="384" width="56" height="44" rx="10" fill="#c9a227"/>
     <rect x="656" y="384" width="56" height="44" rx="10" fill="#c9a227"/>
   </g>
@@ -52,8 +52,8 @@
   </g>
 
   <g transform="translate(690 470)">
-    <path d="M0 0 c-20 -50 -6 -80 4 -100 c12 26 18 64 6 100 Z" fill="#2f6b45"/>
-    <path d="M0 0 c12 -46 34 -64 46 -78 c-4 32 -14 64 -40 78 Z" fill="#3c7350"/>
+    <path d="M0 0 c-20 -50 -6 -80 4 -100 c12 26 18 64 6 100 Z" fill="#2f4a6b"/>
+    <path d="M0 0 c12 -46 34 -64 46 -78 c-4 32 -14 64 -40 78 Z" fill="#3c5573"/>
     <path d="M-24 0 h48 l-7 44 h-34 Z" fill="#b9714a"/>
   </g>
 </svg>

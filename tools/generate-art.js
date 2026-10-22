@@ -12,8 +12,73 @@ const here = dirname(fileURLToPath(import.meta.url));
 const outDir = join(here, "..", "images");
 mkdirSync(outDir, { recursive: true });
 
+/* ------------------------------------------------------------------ */
+/* brand recolouring                                                    */
+/* ------------------------------------------------------------------ */
+
+/* The illustrations were drawn in a forest-green palette. The site is now
+   deep navy and gold, so every green is rotated into the navy band.
+   Only the hue moves — saturation, lightness, every shape and every
+   path stays exactly as it was, and the gold, terracotta and wood
+   tones are left untouched. */
+const GREEN_HUE = [85, 180];
+const NAVY_HUE = [200, 222];
+
+function rgbToHsl(r, g, b) {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  const d = max - min;
+  let h = 0;
+  let s = 0;
+  if (d !== 0) {
+    s = d / (1 - Math.abs(2 * l - 1));
+    if (max === r) h = 60 * (((g - b) / d) % 6);
+    else if (max === g) h = 60 * ((b - r) / d + 2);
+    else h = 60 * ((r - g) / d + 4);
+  }
+  if (h < 0) h += 360;
+  return [h, s, l];
+}
+
+function hueToRgb(p, q, t) {
+  if (t < 0) t += 1;
+  if (t > 1) t -= 1;
+  if (t < 1 / 6) return p + (q - p) * 6 * t;
+  if (t < 1 / 2) return q;
+  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+  return p;
+}
+
+function hslToHex(h, s, l) {
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  const p = 2 * l - q;
+  const channel = (t) =>
+    Math.round(hueToRgb(p, q, t) * 255)
+      .toString(16)
+      .padStart(2, "0");
+  return `#${channel(h / 360 + 1 / 3)}${channel(h / 360)}${channel(h / 360 - 1 / 3)}`;
+}
+
+function recolor(hex) {
+  const match = /^#([0-9a-f]{6})$/i.exec(hex);
+  if (!match) return hex;
+  const value = parseInt(match[1], 16);
+  let [h, s, l] = rgbToHsl((value >> 16) & 255, (value >> 8) & 255, value & 255);
+  if (s < 0.05) return hex; // true greys stay grey
+  if (h >= GREEN_HUE[0] && h <= GREEN_HUE[1]) {
+    const span = GREEN_HUE[1] - GREEN_HUE[0];
+    h = NAVY_HUE[0] + ((h - GREEN_HUE[0]) * (NAVY_HUE[1] - NAVY_HUE[0])) / span;
+  }
+  return hslToHex(h, s, l);
+}
+
 const write = (name, svg) => {
-  writeFileSync(join(outDir, name), `${svg.trim()}\n`, "utf8");
+  const recoloured = svg.replace(/#[0-9a-fA-F]{6}\b/g, recolor);
+  writeFileSync(join(outDir, name), `${recoloured.trim()}\n`, "utf8");
 };
 
 /* ------------------------------------------------------------------ */

@@ -268,6 +268,8 @@ All 36 illustrations in `images/` are original SVGs written by `tools/generate-a
 npm run art
 ```
 
+The brand palette is **deep navy and gold**. The generator rotates every green in the artwork into the navy band as it writes the files, so the illustrations always match the site colours — gold, terracotta, wood and sky tones are left untouched and no shape is ever altered.
+
 ---
 
 ## Deployment
