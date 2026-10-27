@@ -446,7 +446,7 @@ function addRoom() {
     reviews: 0,
     tag: "",
     amenities: ["wifi", "ac", "tv", "bath", "power", "keycard"],
-    image: "images/room-deluxe.svg",
+    image: "images/room-deluxe.jpg",
     description: "Describe this room type for guests.",
   });
   admin.saveRooms(list);
@@ -526,7 +526,7 @@ function importCatalogue(input) {
         room.reviews = Number(room.reviews) || 0;
         room.rating = Number(room.rating) || 0;
         room.amenities = Array.isArray(room.amenities) ? room.amenities : [];
-        room.image = room.image || "images/room-deluxe.svg";
+        room.image = room.image || "images/room-deluxe.jpg",
         room.description = room.description || "";
       });
       admin.saveRooms(parsed);

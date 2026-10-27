@@ -47,7 +47,7 @@ export const ROOMS = [
     reviews: 146,
     tag: "Popular",
     amenities: ["wifi", "ac", "tv", "bath", "bathtub", "minibar", "coffee", "workspace", "safe", "laundry", "parking", "power", "keycard", "roomservice", "gym", "pool", "view"],
-    image: "images/room-deluxe.svg",
+    image: "images/room-deluxe.jpg",
     description:
       "The room most of our guests choose: a king bed, freestanding tub and a wide window over the Inyaba main road. Gym and outdoor pool access included, with free Wi-Fi and 24-hour power.",
   },
@@ -66,7 +66,7 @@ export const ROOMS = [
     reviews: 29,
     tag: "Signature",
     amenities: ["wifi", "ac", "tv", "bath", "bathtub", "minibar", "coffee", "workspace", "safe", "laundry", "parking", "power", "keycard", "roomservice", "gym", "pool", "hottub", "restaurant", "club", "events", "sofa", "balcony", "kitchen", "view", "breakfast"],
-    image: "images/room-presidential.svg",
+    image: "images/room-presidential.jpg",
     description:
       "Our top residence: two bedrooms, a private lounge, dining for eight and a grand terrace. Reserved for celebrations, VIP arrivals and long stays.",
   },
@@ -85,7 +85,7 @@ export const ROOMS = [
     reviews: 73,
     tag: "Suite",
     amenities: ["wifi", "ac", "tv", "bath", "bathtub", "minibar", "coffee", "workspace", "safe", "laundry", "parking", "power", "keycard", "roomservice", "gym", "pool", "hottub", "restaurant", "sofa", "balcony", "view", "breakfast"],
-    image: "images/room-executive.svg",
+    image: "images/room-executive.jpg",
     description:
       "A separate living room, dining for four, a deep soaking tub and skyline views from the balcony. Our most requested suite for short business stays and anniversaries.",
   },
