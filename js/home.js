@@ -4,6 +4,8 @@ import { getHotel } from "./hotel-store.js";
 const HOTEL = getHotel();
 import { getRooms, totalReviews, totalUnits } from "./rooms-store.js";
 import { bookings } from "./storage.js";
+
+const GUEST_REVIEWS_KEY = "dabara_guest_reviews";
 import {
   addDays,
   formatDate,
@@ -136,22 +138,43 @@ function renderServices() {
     .join("");
 }
 
+function loadGuestReviews() {
+  try {
+    const raw = localStorage.getItem(GUEST_REVIEWS_KEY);
+    const list = raw ? JSON.parse(raw) : [];
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveGuestReview(review) {
+  const list = loadGuestReviews();
+  list.unshift(review);
+  try {
+    localStorage.setItem(GUEST_REVIEWS_KEY, JSON.stringify(list));
+  } catch {}
+}
+
 function renderReviews() {
-  qs("#review-grid").innerHTML = REVIEWS.slice(0, 6)
+  const guest = loadGuestReviews();
+  const all = [...guest, ...REVIEWS];
+  const reviews = all.slice(0, 12);
+  qs("#review-grid").innerHTML = reviews
     .map(
       (r) => `
       <div class="review">
         <div class="review__head">
-          <div class="avatar">${r.name.charAt(0)}</div>
+          <div class="avatar">${(r.name || "G").charAt(0).toUpperCase()}</div>
           <div class="grow">
-            <b>${r.name}</b>
-            <span>${r.role}</span>
+            <b>${escapeHtml(r.name || "Guest")}</b>
+            <span>${escapeHtml(r.role || "Guest stay")}</span>
           </div>
-          <span class="rating">${Array.from({ length: r.rating })
+          <span class="rating">${Array.from({ length: Number(r.rating) || 5 })
             .map(() => iconFilled("star"))
             .join("")}</span>
         </div>
-        <p>“${r.text}”</p>
+        <p>“${escapeHtml(r.text || "")}”</p>
       </div>`,
     )
     .join("");
@@ -220,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderFaq();
   initSearch();
   initBadge();
+  initReviewForm();
 
   const year = new Date().getFullYear();
   qsa("[data-year]").forEach((el) => {

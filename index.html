@@ -109,8 +109,50 @@
           <div class="section__head section__head--center">
             <span class="eyebrow">Guest reviews</span>
             <h2>Loved by travellers across Nigeria</h2>
+            <p class="section__lead">See what our guests have to say about their stay at Dabara Hotel and Suites.</p>
           </div>
           <div class="grid grid--3" id="review-grid"></div>
+
+          <div class="container container--narrow" style="margin-top: 48px">
+            <div class="panel">
+              <div class="section__head" style="margin-bottom: 18px">
+                <div>
+                  <span class="eyebrow">Share your experience</span>
+                  <h3 style="margin-top: 8px">Leave a review</h3>
+                  <p class="muted">Tell us about your stay — your review will appear on this page.</p>
+                </div>
+              </div>
+              <form id="reviewForm" class="form-grid" novalidate>
+                <label class="field">
+                  <span class="field__label">Full name</span>
+                  <input class="input" id="revName" autocomplete="name" placeholder="e.g. John Okoye" required />
+                </label>
+                <label class="field">
+                  <span class="field__label">Stay type / role</span>
+                  <input class="input" id="revRole" placeholder="e.g. Business traveller, Family stay" required />
+                </label>
+                <label class="field field--full">
+                  <span class="field__label">Rating</span>
+                  <select class="select" id="revRating" required>
+                    <option value="5">5 - Excellent</option>
+                    <option value="4">4 - Very good</option>
+                    <option value="3">3 - Good</option>
+                    <option value="2">2 - Fair</option>
+                    <option value="1">1 - Poor</option>
+                  </select>
+                </label>
+                <label class="field field--full">
+                  <span class="field__label">Your review</span>
+                  <textarea class="textarea" id="revText" rows="5" placeholder="Share your experience with us..." required></textarea>
+                </label>
+                <div class="field--full" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center">
+                  <button class="btn" type="submit">Submit review</button>
+                  <p class="muted text-sm">Reviews are saved on this device only.</p>
+                </div>
+              </form>
+              <div id="reviewMsg" class="mt-3"></div>
+            </div>
+          </div>
         </div>
       </section>
 
