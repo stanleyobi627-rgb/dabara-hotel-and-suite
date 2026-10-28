@@ -24,7 +24,7 @@ const CARDS = [
   {
     icon: "mail",
     title: "Email reservations",
-    body: HOTEL.email,
+    body: `${HOTEL.email} — for room bookings, group stays and invoices.`,
     href: `mailto:${HOTEL.email}`,
     cta: "Send an email",
   },
@@ -34,12 +34,12 @@ function renderCards() {
   qs("#contact-cards").innerHTML = CARDS.map(
     (c) => `
     <div class="contact-card">
-      <div class="contact-card__icon">${icon(c.icon)}</div>
-      <div class="grow">
+      <div class="contact-card__top">
+        <div class="contact-card__icon">${icon(c.icon)}</div>
         <b>${c.title}</b>
-        <p>${escapeHtml(c.body)}</p>
       </div>
-      <a class="btn btn--sm btn--ghost" href="${c.href}" target="_blank" rel="noopener">${c.cta}</a>
+      <p class="contact-card__body">${escapeHtml(c.body)}</p>
+      <a class="btn btn--sm btn--ghost contact-card__cta" href="${c.href}">${c.cta}</a>
     </div>`,
   ).join("");
 }

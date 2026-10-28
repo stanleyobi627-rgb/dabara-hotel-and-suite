@@ -31,18 +31,18 @@ function serviceCard(service) {
   return `
     <article class="panel" id="${service.id}" style="scroll-margin-top:100px">
       <div class="row" style="align-items:flex-start; gap:18px; flex-wrap:nowrap">
-        <div style="width:150px; flex:none; border-radius:16px; overflow:hidden; border:1px solid var(--line)">
-          <img src="${service.image}" alt="${service.name}" style="width:100%; aspect-ratio:1; object-fit:cover" loading="lazy" />
+        <div style="width:220px; flex:none; border-radius:16px; overflow:hidden; border:1px solid var(--line)">
+          <img src="${service.image}" alt="${service.name}" style="width:100%; aspect-ratio:4/3; object-fit:cover" loading="lazy" />
         </div>
         <div class="grow">
           <div class="row row--between" style="align-items:flex-start">
             <h2 class="panel__title" style="margin:0">${service.name}</h2>
-            <span class="badge">${service.price ? `from ${naira(service.price)}` : "Complimentary"}</span>
+            ${service.showPrice !== false && service.price ? `<span class="badge">from ${naira(service.price)}</span>` : ""}
           </div>
-          <p class="text-sm muted" style="margin:6px 0 10px">${service.duration}</p>
+          <p class="text-sm muted" style="margin:6px 0 10px">${service.duration || ""}</p>
           <p>${service.description}</p>
           <ul class="service__includes">
-            ${service.includes.map((i) => `<li>${icon("check")}<span>${i}</span></li>`).join("")}
+            ${(service.includes || []).map((i) => `<li>${icon("check")}<span>${i}</span></li>`).join("")}
           </ul>
           <a class="link-arrow" href="contact.html">Enquire about this service ${icon("arrow")}</a>
         </div>

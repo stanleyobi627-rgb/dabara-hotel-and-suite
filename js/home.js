@@ -8,6 +8,7 @@ import { bookings } from "./storage.js";
 const GUEST_REVIEWS_KEY = "dabara_guest_reviews";
 import {
   addDays,
+  escapeHtml,
   formatDate,
   nightsBetween,
   naira,
@@ -156,13 +157,11 @@ function saveGuestReview(review) {
   } catch {}
 }
 
-function renderReviews() {
-  const guest = loadGuestReviews();
-  const all = [...guest, ...REVIEWS];
-  const reviews = all.slice(0, 12);
-  qs("#review-grid").innerHTML = reviews
-    .map(
-      (r) => `
+function reviewCard(r) {
+  const stars = Array.from({ length: Math.max(1, Number(r.rating) || 5) })
+    .map(() => iconFilled("star"))
+    .join("");
+  return `
       <div class="review">
         <div class="review__head">
           <div class="avatar">${(r.name || "G").charAt(0).toUpperCase()}</div>
@@ -170,14 +169,62 @@ function renderReviews() {
             <b>${escapeHtml(r.name || "Guest")}</b>
             <span>${escapeHtml(r.role || "Guest stay")}</span>
           </div>
-          <span class="rating">${Array.from({ length: Number(r.rating) || 5 })
-            .map(() => iconFilled("star"))
-            .join("")}</span>
+          <span class="rating">${stars}</span>
         </div>
         <p>“${escapeHtml(r.text || "")}”</p>
-      </div>`,
-    )
-    .join("");
+      </div>`;
+}
+
+function allReviews() {
+  return [...loadGuestReviews(), ...REVIEWS];
+}
+
+function renderReviews() {
+  const all = allReviews();
+
+  const grid = qs("#review-grid");
+  if (grid) {
+    grid.innerHTML = all.slice(0, 12).map(reviewCard).join("");
+  }
+
+  const homeGrid = qs("#home-reviews-grid");
+  if (homeGrid) {
+    homeGrid.innerHTML = all.slice(0, 6).map(reviewCard).join("");
+  }
+}
+
+function initReviewForm() {
+  const form = qs("#reviewForm");
+  if (!form) return;
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const name = qs("#revName", form)?.value.trim() || "";
+    const role = qs("#revRole", form)?.value.trim() || "";
+    const rating = Number(qs("#revRating", form)?.value) || 5;
+    const text = qs("#revText", form)?.value.trim() || "";
+
+    if (!name || !role || !text) {
+      toast("Please add your name, stay type and a short review.", "danger");
+      return;
+    }
+
+    saveGuestReview({ name, role, rating, text, date: new Date().toISOString() });
+    form.reset();
+    renderReviews();
+
+    const msg = qs("#reviewMsg");
+    if (msg) {
+      msg.innerHTML = `<p class="text-gold"><b>Thank you, ${escapeHtml(
+        name,
+      )}.</b> Your review is now showing in the list above.</p>`;
+    }
+    toast("Thanks! Your review has been posted.", "success");
+
+    const target = qs("#review-grid") || qs("#home-reviews-grid");
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 
 function renderFaq() {

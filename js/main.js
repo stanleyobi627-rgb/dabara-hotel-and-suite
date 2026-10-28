@@ -8,7 +8,8 @@ import { qs, qsa } from "./utils.js";
 const NAV = [
   { label: "Home", href: "index.html" },
   { label: "Rooms", href: "rooms.html" },
-  { label: "Services", href: "services.html" },
+  { label: "Our Services", href: "services.html" },
+  { label: "Reviews", href: "reviews.html" },
   { label: "Contact", href: "contact.html" },
   { label: "My Bookings", href: "my-bookings.html" },
 ];
@@ -87,7 +88,7 @@ function footerMarkup() {
           <h4>Explore</h4>
           <ul class="footer-links">
             <li><a href="rooms.html">Rooms &amp; suites</a></li>
-            <li><a href="services.html">Hotel services</a></li>
+            <li><a href="services.html">Our Services</a></li>
             <li><a href="booking.html">Book a stay</a></li>
             <li><a href="my-bookings.html">My bookings</a></li>
             <li><a href="contact.html">Contact us</a></li>
@@ -97,9 +98,11 @@ function footerMarkup() {
           <h4>Guests</h4>
           <ul class="footer-links">
             <li><a href="contact.html#faq">FAQ</a></li>
-            <li><a href="services.html#wellness">Hot tub &amp; wellness</a></li>
-            <li><a href="services.html#restaurant">Restaurant &amp; bar</a></li>
-            <li><a href="services.html#events">Meetings &amp; events</a></li>
+            <li><a href="services.html#restaurant">Restaurant &amp; Bar</a></li>
+            <li><a href="services.html#pool">Outdoor Swimming Pool</a></li>
+            <li><a href="services.html#hottub">Hot Tub</a></li>
+            <li><a href="services.html#gym">Fitness Centre</a></li>
+            <li><a href="services.html#events">Events &amp; Banquets</a></li>
             <li><a href="contact.html#faq">Cancellation policy</a></li>
           </ul>
         </div>

@@ -1,4 +1,4 @@
-import { ROOMS as CATALOGUE, CATALOGUE_VERSION } from "./catalogue.js";
+﻿import { ROOMS as CATALOGUE, CATALOGUE_VERSION } from "./catalogue.js";
 
 export { CATALOGUE };
 export const ROOMS = CATALOGUE;
@@ -55,10 +55,54 @@ export const AMENITIES = [
   { id: "laundry", label: "Laundry service" },
   { id: "breakfast", label: "Paid breakfast" },
   { id: "parking", label: "Free parking" },
-  { id: "gym", label: "Fitness centre" },
-  { id: "pool", label: "Outdoor pool" },
-  { id: "hottub", label: "Hot tub" },
-  { id: "restaurant", label: "Restaurant & bar" },
+    {
+    id: "gym",
+    name: "Dabara Fitness Centre",
+    icon: "gym",
+    price: 0,
+    showPrice: false,
+    duration: "24-hour access",
+    image: "images/gym.jpg",
+    description:
+      "Our fitness centre is well-equipped with cardio machines, free weights and a stretching area, open around the clock so it fits around your schedule. Personal training can be arranged on request.",
+    includes: ["24-hour access", "Cardio & free weights", "Stretching area", "Trainer on request"],
+  },
+      {
+    id: "pool",
+    name: "Outdoor Swimming Pool",
+    icon: "pool",
+    price: 0,
+    showPrice: false,
+    duration: "7:00 AM - 9:00 PM",
+    image: "images/pool.jpg",
+    description:
+      "A well-maintained outdoor swimming pool in a quiet corner of the grounds, with shaded loungers and towels at the deck. Free for in-house guests, with day passes available at the front desk on weekends.",
+    includes: ["Free for in-house guests", "Sun loungers & towels", "Poolside seating", "Weekend day passes"],
+  },
+  {
+    id: "hottub",
+    name: "Hot Tub",
+    icon: "spa",
+    price: 0,
+    showPrice: false,
+    duration: "10:00 AM - 10:00 PM",
+    image: "images/pool.jpg",
+    description:
+      "A heated hot tub set apart for a quiet, relaxing soak at the end of the day. Perfect for unwinding after a long day or for a private moment of relaxation.",
+    includes: ["Heated hot tub", "Towels provided", "Relaxation area"],
+  },
+  {
+    id: "restaurant",
+    name: "Restaurant & Bar",
+    icon: "restaurant",
+    price: 0,
+    showPrice: false,
+    duration: "7:00 AM - 12:00 AM",
+    image: "images/restaurant.jpg",
+    description:
+      "Our Restaurant serves freshly prepared local and continental dishes cooked to order. The Bar offers a wide selection of Nigerian spirits, wines, beers and mocktails in a relaxed setting. Room service is also available for guests who prefer to dine in the comfort of their rooms. A dedicated Night Club is also available on the premises for guests looking to unwind late into the night.",
+    includes: ["Restaurant", "Bar", "Room service", "Night Club"],
+  },
   { id: "club", label: "Night club" },
   { id: "events", label: "Event space" },
   { id: "roomservice", label: "Room service" },
@@ -79,44 +123,48 @@ export const SERVICES = [
     id: "restaurant",
     name: "Restaurant & Bar",
     icon: "restaurant",
-    price: 8500,
-    duration: "7:00 AM – 12:00 AM",
-    image: "images/service-dining.svg",
+    price: 0,
+    showPrice: false,
+    duration: "7:00 AM - 12:00 AM",
+    image: "images/restaurant.jpg",
     description:
-      "Local and continental dishes cooked to order, a full bar with Nigerian spirits and mocktails, and a service that runs late into the night. The kitchen also keeps a dedicated night club on the same premises for guests who want to keep going.",
-    includes: ["Paid breakfast buffet", "À la carte dinner", "Bar and cocktail service", "Room service to your door"],
+      "Our Restaurant serves freshly prepared local and continental dishes cooked to order. The Bar offers a wide selection of Nigerian spirits, wines, beers and mocktails in a relaxed setting. Room service is also available for guests who prefer to dine in the comfort of their rooms. A dedicated Night Club is also available on the premises for guests looking to unwind late into the night.",
+    includes: ["Restaurant", "Bar", "Room service", "Night Club"],
   },
-  {
+    {
     id: "pool",
     name: "Outdoor Swimming Pool",
     icon: "pool",
     price: 0,
-    duration: "7:00 AM – 9:00 PM",
-    image: "images/service-pool.svg",
+    showPrice: false,
+    duration: "7:00 AM - 9:00 PM",
+    image: "images/pool.jpg",
     description:
-      "A well-maintained outdoor pool in a quiet corner of the grounds, with shaded loungers and towels at the deck. Free for in-house guests, with day passes available at the front desk on weekends.",
+      "A well-maintained outdoor swimming pool in a quiet corner of the grounds, with shaded loungers and towels at the deck. Free for in-house guests, with day passes available at the front desk on weekends.",
     includes: ["Free for in-house guests", "Sun loungers & towels", "Poolside seating", "Weekend day passes"],
   },
   {
-    id: "wellness",
-    name: "Hot Tub & Wellness Corner",
+    id: "hottub",
+    name: "Hot Tub",
     icon: "spa",
-    price: 20000,
-    duration: "10:00 AM – 10:00 PM",
-    image: "images/service-spa.svg",
+    price: 0,
+    showPrice: false,
+    duration: "10:00 AM - 10:00 PM",
+    image: "images/pool.jpg",
     description:
-      "A heated hot tub set apart from the pool for a quiet soak at the end of the day. Add hot tub access to your booking or walk in at the front desk when a room is free.",
-    includes: ["Heated hot tub", "Private soak sessions", "Towels and robes", "Add to any room at booking"],
+      "A heated hot tub set apart for a quiet, relaxing soak at the end of the day. Perfect for unwinding after a long day or for a private moment of relaxation.",
+    includes: ["Heated hot tub", "Towels provided", "Relaxation area"],
   },
   {
     id: "gym",
     name: "Dabara Fitness Centre",
     icon: "gym",
     price: 0,
+    showPrice: false,
     duration: "24-hour access",
-    image: "images/service-gym.svg",
+    image: "images/gym.jpg",
     description:
-      "A compact but well-equipped fitness centre with cardio machines, free weights and a stretching area, open around the clock so it fits around a working day. Personal training can be arranged on request.",
+      "Our fitness centre is well-equipped with cardio machines, free weights and a stretching area, open around the clock so it fits around your schedule. Personal training can be arranged on request.",
     includes: ["24-hour access", "Cardio & free weights", "Stretching area", "Trainer on request"],
   },
   {
@@ -148,7 +196,18 @@ export const EXTRAS = [
   { id: "pickup", name: "Airport pickup", price: 45000, note: "One way, from Enugu" },
   { id: "late", name: "Late checkout (6 PM)", price: 10000, note: "Subject to availability" },
   { id: "bed", name: "Extra bed", price: 12000, note: "Per night" },
-  { id: "hottub", name: "Hot tub access", price: 20000, note: "Per stay, per room" },
+  {
+    id: "hottub",
+    name: "Hot Tub",
+    icon: "spa",
+    price: 0,
+    showPrice: false,
+    duration: "10:00 AM - 10:00 PM",
+    image: "images/pool.jpg",
+    description:
+      "A heated hot tub set apart for a quiet, relaxing soak at the end of the day. Perfect for unwinding after a long day or for a private moment of relaxation.",
+    includes: ["Heated hot tub", "Towels provided", "Relaxation area"],
+  },
   { id: "tour", name: "Nnewi city tour", price: 18000, note: "3 hours, per group" },
 ];
 
@@ -254,4 +313,36 @@ export const FAQ = [
     q: "What is around the hotel?",
     a: "The hotel stands on the main thoroughfare in Inyaba, minutes from the Nnewi flyover junction, Nkwo main market and the Nnewi bus station. Onitsha is 20 minutes away and Enugu International Airport is about 45 minutes by road.",
   },
+  {
+    q: "Is Wi-Fi really free?",
+    a: "Yes. Fibre Wi-Fi is free throughout the hotel — in every room, the restaurant, the bar and all public areas. It is strong enough for video calls and uploading photos, and the front desk can help if you have trouble connecting.",
+  },
+  {
+    q: "Can I use the pool, gym and hot tub?",
+    a: "All three are free for in-house guests. The pool is open from 7:00 AM to 9:00 PM, the fitness centre is open 24 hours, and the hot tub is available from 10:00 AM to 10:00 PM. Towels are provided at the pool deck and in the gym.",
+  },
+  {
+    q: "Do you host weddings, conferences and events?",
+    a: "Yes. We have flexible event space for weddings, trainings, birthdays, conferences and corporate retreats, with sound, a projector and catering packages available. With 68 rooms on site, your guests can stay and celebrate in one place. Send an enquiry from the Contact page or call the front desk to check dates.",
+  },
+  {
+    q: "Are children welcome, and can you add an extra bed?",
+    a: "Children are welcome at Dabara. An extra bed can be added to most rooms for ₦12,000 per night, subject to the room's capacity. Mention it when you book or ask at reception on arrival.",
+  },
+  {
+    q: "Is smoking allowed in the rooms?",
+    a: "All rooms are non-smoking for the comfort of every guest. Smoking is permitted only in the designated outdoor areas — please ask the front desk where those are.",
+  },
+  {
+    q: "Do you allow pets?",
+    a: "Pets are not allowed at the hotel, with the exception of registered assistance dogs. If you are travelling with an assistance dog, let us know before arrival so we can prepare a suitable room.",
+  },
 ];
+
+
+
+
+
+
+
+
