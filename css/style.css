@@ -677,6 +677,58 @@ p {
   color: rgba(246, 242, 233, 0.7);
 }
 
+/* ---------- 6b. Hero marquee ---------- */
+.marquee {
+  overflow: hidden;
+  background: var(--primary);
+  border-top: 1px solid rgba(201, 162, 39, 0.35);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.35);
+  padding: 14px 0;
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 70s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__group {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.marquee__item {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  letter-spacing: 0.015em;
+  color: rgba(246, 242, 233, 0.88);
+}
+
+.marquee__item::after {
+  content: "◆";
+  color: var(--accent-2);
+  font-size: 0.5rem;
+  margin: 0 26px;
+  opacity: 0.9;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* ---------- 7. Search bar ---------- */
 .searchbar {
   background: var(--surface);
@@ -688,7 +740,7 @@ p {
   grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
   gap: 12px;
   align-items: end;
-  margin-top: -46px;
+  margin-top: clamp(18px, 2.5vw, 26px);
   position: relative;
   z-index: 5;
 }
@@ -2287,6 +2339,34 @@ table.data tbody tr:hover {
   .btn--lg {
     padding: 14px 22px;
     font-size: 0.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+    width: 100%;
+  }
+
+  .marquee__group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .marquee__group {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 16px;
+    row-gap: 6px;
+  }
+
+  .marquee__item {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .marquee__item::after {
+    margin: 0 12px;
   }
 }
 
