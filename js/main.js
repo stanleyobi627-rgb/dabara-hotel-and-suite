@@ -45,28 +45,30 @@ function headerMarkup() {
       </div>
     </div>
     <div class="mobile-nav" id="mobile-nav" role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
-      <div class="mobile-nav__head">
-        <a class="brand" href="index.html">
-          <span class="brand__mark">D</span>
-          <span>
-            <span class="brand__name">Dabara</span>
-            <span class="brand__sub">Hotel &amp; Suites</span>
-          </span>
-        </a>
-        <button class="icon-btn" id="nav-close" type="button" aria-label="Close menu">${icon("close")}</button>
-      </div>
-      <nav class="mobile-nav__links" aria-label="Mobile">
-        ${NAV.map(
-          (item) =>
-            `<a href="${item.href}" class="${page === item.href ? "is-active" : ""}"><span>${item.label}</span><span class="mobile-nav__arrow">${icon("arrow")}</span></a>`,
-        ).join("")}
-      </nav>
-      <div class="mobile-nav__foot">
-        <a class="btn btn--lg mobile-nav__cta" href="booking.html">Book a room</a>
-        <a class="mobile-nav__link-small" href="admin.html">Staff dashboard</a>
-        <p class="mobile-nav__contact">
-          Questions? <a href="tel:${HOTEL.phoneRaw}">${HOTEL.phone}</a>
-        </p>
+      <div class="mobile-nav__panel">
+        <div class="mobile-nav__head">
+          <a class="brand" href="index.html">
+            <span class="brand__mark">D</span>
+            <span>
+              <span class="brand__name">Dabara</span>
+              <span class="brand__sub">Hotel &amp; Suites</span>
+            </span>
+          </a>
+          <button class="icon-btn" id="nav-close" type="button" aria-label="Close menu">${icon("close")}</button>
+        </div>
+        <nav class="mobile-nav__links" aria-label="Mobile">
+          ${NAV.map(
+            (item) =>
+              `<a href="${item.href}" class="${page === item.href ? "is-active" : ""}"><span>${item.label}</span><span class="mobile-nav__arrow">${icon("arrow")}</span></a>`,
+          ).join("")}
+        </nav>
+        <div class="mobile-nav__foot">
+          <a class="btn btn--lg mobile-nav__cta" href="booking.html">Book a room</a>
+          <a class="mobile-nav__link-small" href="admin.html">Staff dashboard</a>
+          <p class="mobile-nav__contact">
+            Questions? <a href="tel:${HOTEL.phoneRaw}">${HOTEL.phone}</a>
+          </p>
+        </div>
       </div>
     </div>`;
 }
@@ -189,6 +191,10 @@ export function initChrome() {
   if (closeBtn) closeBtn.addEventListener("click", () => setNav(false));
   if (nav) {
     qsa("a", nav).forEach((link) => link.addEventListener("click", () => setNav(false)));
+
+    nav.addEventListener("click", (event) => {
+      if (event.target === nav) setNav(false);
+    });
 
     nav.addEventListener("keydown", (event) => {
       if (event.key !== "Tab") return;

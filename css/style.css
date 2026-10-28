@@ -557,16 +557,47 @@ p {
   position: fixed;
   inset: 0;
   z-index: 120;
-  background: var(--bg);
-  padding: 16px 22px calc(24px + env(safe-area-inset-bottom));
   display: none;
-  flex-direction: column;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  justify-content: flex-end;
+  background: rgba(8, 19, 32, 0.55);
+  backdrop-filter: blur(2px);
 }
 
 .mobile-nav.is-open {
   display: flex;
+  animation: nav-fade-in 0.24s var(--ease);
+}
+
+.mobile-nav__panel {
+  width: min(88vw, 380px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 16px 22px calc(24px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  box-shadow: -24px 0 60px rgba(8, 19, 32, 0.28);
+  animation: nav-slide-in 0.32s var(--ease);
+}
+
+@keyframes nav-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes nav-slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 .mobile-nav__head {
@@ -2434,6 +2465,11 @@ table.data tbody tr:hover {
   .marquee__track {
     animation: none;
     width: 100%;
+  }
+
+  .mobile-nav.is-open,
+  .mobile-nav__panel {
+    animation: none;
   }
 
   .marquee__group[aria-hidden="true"] {
