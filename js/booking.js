@@ -326,16 +326,34 @@ function initStep3() {
     const booking = createBooking();
     bookings.add(booking);
     state.booking = booking;
+
+    /* Open WhatsApp inside the click gesture so browsers allow the popup.
+       The confirmation screen keeps a button as a fallback if it is blocked. */
+    let waWindow = null;
+    try {
+      waWindow = window.open(whatsappBookingUrl(booking), "_blank");
+      if (waWindow) waWindow.opener = null;
+    } catch {
+      waWindow = null;
+    }
+
     renderConfirmation(booking);
     goTo(4);
-    toast("Reservation confirmed. Check your details below.", "success");
+    toast(
+      waWindow
+        ? "Reservation saved — press Send in WhatsApp to confirm it with the front desk."
+        : "Reservation saved. Tap “Send booking on WhatsApp” to notify the front desk.",
+      waWindow ? "success" : "warn",
+    );
   });
 }
 
 function createBooking() {
   const t = totals();
   const r = room();
-  const paymentStatus = state.payment === "card" ? "paid" : "pending";
+  /* No payment is taken online yet — card details are a demo, and bank transfers
+     are confirmed by the front desk. Every booking therefore starts unpaid. */
+  const paymentStatus = "pending";
   return {
     id: `bk_${Date.now()}`,
     code: bookingCode(),
@@ -372,19 +390,55 @@ function createBooking() {
   };
 }
 
+function paymentLabelFor(method) {
+  return (
+    {
+      card: "Card (pay at property)",
+      transfer: "Bank transfer",
+      property: "Pay at property",
+    }[method] || "Pay at property"
+  );
+}
+
+function whatsappBookingMessage(booking) {
+  const guestName = `${booking.firstName} ${booking.lastName}`.trim();
+  const guests = [`${booking.adults} adult${booking.adults > 1 ? "s" : ""}`];
+  if (booking.children) guests.push(`${booking.children} child${booking.children > 1 ? "ren" : ""}`);
+  if (booking.quantity > 1) guests.push(`${booking.quantity} rooms`);
+
+  const lines = [
+    `Hello ${HOTEL.short}, I just booked on your website and would like to confirm.`,
+    "",
+    `Reference: ${booking.code}`,
+    `Guest: ${guestName}`,
+    `Phone: ${booking.phone}`,
+    `Email: ${booking.email}`,
+    `Room: ${booking.roomName}`,
+    `Check-in: ${formatDate(booking.checkIn, "long")} (from ${HOTEL.checkInTime})`,
+    `Check-out: ${formatDate(booking.checkOut, "long")} (by ${HOTEL.checkOutTime})`,
+    `Nights: ${booking.nights}`,
+    `Guests: ${guests.join(", ")}`,
+    `Total: ${naira(booking.total)}`,
+    `Payment: ${paymentLabelFor(booking.paymentMethod)}`,
+  ];
+  if (booking.requests) lines.push(`Requests: ${booking.requests}`);
+  lines.push("", "Please confirm my booking. Thank you!");
+  return lines.join("\n");
+}
+
+function whatsappBookingUrl(booking) {
+  return whatsappLink(whatsappBookingMessage(booking));
+}
+
 function renderConfirmation(booking) {
   const r = room();
-  const paymentLabel = {
-    card: "Card (pay at property)",
-    transfer: "Bank transfer",
-    property: "Pay at property",
-  }[booking.paymentMethod];
+  const waUrl = whatsappBookingUrl(booking);
 
   qs("#confirmCard").innerHTML = `
     <div class="confirm-card__icon">${icon("check")}</div>
-    <h2>Your reservation is confirmed</h2>
-    <p class="muted">A copy has been sent to <b>${escapeHtml(booking.email)}</b>. Our front desk
-    will call ${escapeHtml(booking.phone)} to confirm your arrival time.</p>
+    <h2>Your reservation is saved</h2>
+    <p class="muted">Now send these details to our front desk on WhatsApp so we can confirm your
+    arrival time and hold your room. Your reference is <b>${escapeHtml(booking.code)}</b>.</p>
     <div class="confirm-code">${escapeHtml(booking.code)}</div>
 
     <div class="summary text-left" style="text-align:left; max-width:520px; margin-inline:auto">
@@ -399,14 +453,18 @@ function renderConfirmation(booking) {
     booking.adults > 1 ? "s" : ""
   }${booking.children ? `, ${booking.children} child${booking.children > 1 ? "ren" : ""}` : ""}</strong></div>
       <div class="summary__row"><span>Total</span><strong>${naira(booking.total)}</strong></div>
-      <div class="summary__row"><span>Payment</span><strong>${escapeHtml(paymentLabel)}</strong></div>
+      <div class="summary__row"><span>Payment</span><strong>${escapeHtml(paymentLabelFor(booking.paymentMethod))}</strong></div>
     </div>
 
     <div class="row" style="justify-content:center; margin-top:24px">
-      <button class="btn btn--sm" type="button" id="printBtn">${icon("printer")} Print receipt</button>
+      <a class="btn btn--sm btn--accent" id="waBtn" href="${escapeHtml(waUrl)}" target="_blank" rel="noopener">${icon("chat")} Send booking on WhatsApp</a>
+      <button class="btn btn--sm btn--ghost" type="button" id="printBtn">${icon("printer")} Print receipt</button>
       <button class="btn btn--sm btn--ghost" type="button" id="icsBtn">${icon("calendar")} Add to calendar</button>
-      <a class="btn btn--sm btn--accent" id="waBtn" href="#">${icon("chat")} Send on WhatsApp</a>
     </div>
+    <p class="text-xs muted mt-3">
+      If WhatsApp did not open automatically, tap <b>Send booking on WhatsApp</b> above. Prefer to call?
+      <a href="tel:${HOTEL.phoneRaw}">${HOTEL.phone}</a>
+    </p>
     <p class="text-xs muted mt-3">
       Reference <b>${escapeHtml(booking.code)}</b> · ${escapeHtml(r.type)} · ${HOTEL.phone}
     </p>`;
@@ -423,12 +481,6 @@ function renderConfirmation(booking) {
     });
     downloadFile(`${booking.code}.ics`, ics, "text/calendar");
   });
-
-  const message = `Hello ${HOTEL.short}, I just booked ${booking.roomName} (${booking.code}) from ${formatDate(
-    booking.checkIn,
-    "short",
-  )} to ${formatDate(booking.checkOut, "short")}. Total ${naira(booking.total)}.`;
-  qs("#waBtn").href = whatsappLink(message);
 }
 
 function initBackButtons() {
