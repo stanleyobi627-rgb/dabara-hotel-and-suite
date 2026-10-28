@@ -404,7 +404,10 @@ function whatsappBookingMessage(booking) {
   const guestName = `${booking.firstName} ${booking.lastName}`.trim();
   const guests = [`${booking.adults} adult${booking.adults > 1 ? "s" : ""}`];
   if (booking.children) guests.push(`${booking.children} child${booking.children > 1 ? "ren" : ""}`);
-  if (booking.quantity > 1) guests.push(`${booking.quantity} rooms`);
+  const extras = (booking.extras || []).map((extra) => extra.name).filter(Boolean);
+  const promo = booking.promoCode
+    ? `${booking.promoCode}${booking.discount ? ` (−${naira(booking.discount)})` : ""}`
+    : "";
 
   const lines = [
     `Hello ${HOTEL.short}, I just booked on your website and would like to confirm.`,
@@ -414,13 +417,18 @@ function whatsappBookingMessage(booking) {
     `Phone: ${booking.phone}`,
     `Email: ${booking.email}`,
     `Room: ${booking.roomName}`,
+    `Rooms: ${booking.quantity}`,
     `Check-in: ${formatDate(booking.checkIn, "long")} (from ${HOTEL.checkInTime})`,
     `Check-out: ${formatDate(booking.checkOut, "long")} (by ${HOTEL.checkOutTime})`,
     `Nights: ${booking.nights}`,
     `Guests: ${guests.join(", ")}`,
+    `Extras: ${extras.length ? extras.join(", ") : "None"}`,
+    promo ? `Promo: ${promo}` : null,
     `Total: ${naira(booking.total)}`,
     `Payment: ${paymentLabelFor(booking.paymentMethod)}`,
-  ];
+  ].filter((line) => line !== null);
+  if (booking.arrival) lines.push(`Arrival: ${booking.arrival}`);
+  if (booking.occasion) lines.push(`Occasion: ${booking.occasion}`);
   if (booking.requests) lines.push(`Requests: ${booking.requests}`);
   lines.push("", "Please confirm my booking. Thank you!");
   return lines.join("\n");
