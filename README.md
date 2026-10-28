@@ -124,7 +124,7 @@ npm run art          # regenerate all SVG artwork
 `BASE_URL` overrides the target for `e2e` and `probe`, so the same tests can be pointed at the live site:
 
 ```bash
-BASE_URL=https://dabara-hotel-and-suite.vercel.app npm run e2e
+BASE_URL=https://dabara-hotel-suites.vercel.app npm run e2e
 ```
 
 ---
@@ -274,7 +274,7 @@ The brand palette is **deep navy and gold**. The generator rotates every green i
 
 The site is fully static, so any static host works.
 
-**Live site:** <https://dabara-hotel-and-suite.vercel.app>
+**Live site:** <https://dabara-hotel-suites.vercel.app>
 
 **Vercel**
 
@@ -285,7 +285,7 @@ npx vercel --prod   # production
 
 `vercel.json` enables clean URLs, adds security headers and sets cache rules for the artwork.
 
-The Vercel project (`great-innovators/dabara-hotel-and-suite`) is connected to the GitHub repository, so every push to `main` deploys automatically — no build command, output directory is the repository root.
+The Vercel project (`great-innovators/dabara-hotel-suites`) is connected to the GitHub repository, so every push to `main` deploys automatically — no build command, output directory is the repository root.
 
 **GitHub Pages / Netlify / Cloudflare Pages**
 
