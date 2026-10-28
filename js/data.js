@@ -86,7 +86,7 @@ export const AMENITIES = [
     price: 0,
     showPrice: false,
     duration: "10:00 AM - 10:00 PM",
-    image: "images/pool.jpg",
+    image: "images/hottub.jpg",
     description:
       "A heated hot tub set apart for a quiet, relaxing soak at the end of the day. Perfect for unwinding after a long day or for a private moment of relaxation.",
     includes: ["Heated hot tub", "Towels provided", "Relaxation area"],
@@ -150,7 +150,7 @@ export const SERVICES = [
     price: 0,
     showPrice: false,
     duration: "10:00 AM - 10:00 PM",
-    image: "images/pool.jpg",
+    image: "images/hottub.jpg",
     description:
       "A heated hot tub set apart for a quiet, relaxing soak at the end of the day. Perfect for unwinding after a long day or for a private moment of relaxation.",
     includes: ["Heated hot tub", "Towels provided", "Relaxation area"],
@@ -173,7 +173,7 @@ export const SERVICES = [
     icon: "events",
     price: 150000,
     duration: "8:00 AM – 12:00 AM",
-    image: "images/service-conference.svg",
+    image: "images/events.jpg",
     description:
       "Flexible event space that handles weddings, trainings, birthdays and the creative community gatherings the hotel is known for. With 68 rooms on site, groups can stay and celebrate without crossing the city.",
     includes: ["Banquet and conference layout", "Sound and projector", "Catering packages", "Group room rates"],
@@ -184,7 +184,7 @@ export const SERVICES = [
     icon: "plane",
     price: 45000,
     duration: "24-hour bookings",
-    image: "images/service-transfer.svg",
+    image: "images/airport.jpg",
     description:
       "Door-to-door pickup from Enugu International Airport, about 45 minutes from the hotel, in a branded sedan or executive SUV. Flight tracking and a meet-and-greet at arrivals are included.",
     includes: ["Enugu airport pick-up", "Flight tracking", "Meet & greet", "Executive SUV option"],
@@ -203,7 +203,7 @@ export const EXTRAS = [
     price: 0,
     showPrice: false,
     duration: "10:00 AM - 10:00 PM",
-    image: "images/pool.jpg",
+    image: "images/hottub.jpg",
     description:
       "A heated hot tub set apart for a quiet, relaxing soak at the end of the day. Perfect for unwinding after a long day or for a private moment of relaxation.",
     includes: ["Heated hot tub", "Towels provided", "Relaxation area"],
