@@ -41,10 +41,10 @@ function headerMarkup() {
           ${icon("sparkle")}
         </button>
         <a class="btn btn--sm hide-sm" href="booking.html">Book a room</a>
-        <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="Open menu">${icon("menu")}</button>
+        <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">${icon("menu")}</button>
       </div>
     </div>
-    <div class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav" id="mobile-nav" role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
       <div class="mobile-nav__head">
         <a class="brand" href="index.html">
           <span class="brand__mark">D</span>
@@ -55,9 +55,19 @@ function headerMarkup() {
         </a>
         <button class="icon-btn" id="nav-close" type="button" aria-label="Close menu">${icon("close")}</button>
       </div>
-      ${NAV.map((item) => `<a href="${item.href}">${item.label}</a>`).join("")}
-      <a href="admin.html">Staff dashboard</a>
-      <a class="btn mt-2" href="booking.html">Book a room</a>
+      <nav class="mobile-nav__links" aria-label="Mobile">
+        ${NAV.map(
+          (item) =>
+            `<a href="${item.href}" class="${page === item.href ? "is-active" : ""}"><span>${item.label}</span><span class="mobile-nav__arrow">${icon("arrow")}</span></a>`,
+        ).join("")}
+      </nav>
+      <div class="mobile-nav__foot">
+        <a class="btn btn--lg mobile-nav__cta" href="booking.html">Book a room</a>
+        <a class="mobile-nav__link-small" href="admin.html">Staff dashboard</a>
+        <p class="mobile-nav__contact">
+          Questions? <a href="tel:${HOTEL.phoneRaw}">${HOTEL.phone}</a>
+        </p>
+      </div>
     </div>`;
 }
 
@@ -151,16 +161,54 @@ export function initChrome() {
   const nav = qs("#mobile-nav");
   const openBtn = qs("#nav-toggle");
   const closeBtn = qs("#nav-close");
+  let lastFocus = null;
+
+  // The sticky header's backdrop-filter creates a containing block, which would
+  // trap this fixed-position menu inside the 74px header. Move it to <body>.
+  if (nav && nav.parentElement !== document.body) {
+    document.body.appendChild(nav);
+  }
+
   const setNav = (open) => {
     if (!nav) return;
     nav.classList.toggle("is-open", open);
+    nav.setAttribute("aria-hidden", open ? "false" : "true");
     document.body.classList.toggle("is-locked", open);
+    if (openBtn) openBtn.setAttribute("aria-expanded", open ? "true" : "false");
+
+    if (open) {
+      lastFocus = openBtn || document.activeElement;
+      closeBtn?.focus();
+    } else {
+      if (lastFocus instanceof HTMLElement && document.contains(lastFocus)) lastFocus.focus();
+      lastFocus = null;
+    }
   };
+
   if (openBtn) openBtn.addEventListener("click", () => setNav(true));
   if (closeBtn) closeBtn.addEventListener("click", () => setNav(false));
   if (nav) {
     qsa("a", nav).forEach((link) => link.addEventListener("click", () => setNav(false)));
+
+    nav.addEventListener("keydown", (event) => {
+      if (event.key !== "Tab") return;
+      const focusables = qsa("a, button", nav).filter((el) => el.offsetParent !== null);
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
   }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && nav?.classList.contains("is-open")) setNav(false);
+  });
 
   const headerEl = qs(".site-header");
   if (headerEl) {
