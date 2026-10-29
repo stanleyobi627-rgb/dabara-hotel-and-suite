@@ -36,7 +36,7 @@ const state = {
   quantity: 1,
   extras: [],
   promoCode: "",
-  payment: "card",
+  payment: "transfer",
   step: 1,
   booking: null,
 };
@@ -301,24 +301,12 @@ function initStep2() {
 }
 
 function initStep3() {
-  qs("#bankDetails").textContent = `${HOTEL.bank.bankName} · ${HOTEL.bank.account} · ${HOTEL.bank.bank}`;
   qs("#demo-icon").innerHTML = icon("shield");
 
   qsa('input[name="payment"]').forEach((radio) => {
     radio.addEventListener("change", (event) => {
       state.payment = event.target.value;
-      qs("#cardFields").style.display = state.payment === "card" ? "" : "none";
     });
-  });
-
-  const cardNumber = qs("#cardNumber");
-  cardNumber.addEventListener("input", () => {
-    const digits = cardNumber.value.replace(/\D/g, "").slice(0, 16);
-    cardNumber.value = digits.replace(/(.{4})/g, "$1 ").trim();
-  });
-  qs("#cardExpiry").addEventListener("input", (event) => {
-    const digits = event.target.value.replace(/\D/g, "").slice(0, 4);
-    event.target.value = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
   });
 
   qs("#confirmBooking").addEventListener("click", () => {
@@ -351,8 +339,8 @@ function initStep3() {
 function createBooking() {
   const t = totals();
   const r = room();
-  /* No payment is taken online yet — card details are a demo, and bank transfers
-     are confirmed by the front desk. Every booking therefore starts unpaid. */
+  /* No payment is taken online. Transfers are arranged on WhatsApp and
+     property payments are settled at the desk, so every booking starts unpaid. */
   const paymentStatus = "pending";
   return {
     id: `bk_${Date.now()}`,
@@ -393,8 +381,7 @@ function createBooking() {
 function paymentLabelFor(method) {
   return (
     {
-      card: "Card (pay at property)",
-      transfer: "Bank transfer",
+      transfer: "Bank transfer (arranged on WhatsApp)",
       property: "Pay at property",
     }[method] || "Pay at property"
   );
@@ -425,7 +412,9 @@ function whatsappBookingMessage(booking) {
     `Extras: ${extras.length ? extras.join(", ") : "None"}`,
     promo ? `Promo: ${promo}` : null,
     `Total: ${naira(booking.total)}`,
-    `Payment: ${paymentLabelFor(booking.paymentMethod)}`,
+    booking.paymentMethod === "transfer"
+      ? "Payment: Bank transfer — please send the account details."
+      : "Payment: Pay at property",
   ].filter((line) => line !== null);
   if (booking.arrival) lines.push(`Arrival: ${booking.arrival}`);
   if (booking.occasion) lines.push(`Occasion: ${booking.occasion}`);
@@ -463,6 +452,14 @@ function renderConfirmation(booking) {
       <div class="summary__row"><span>Total</span><strong>${naira(booking.total)}</strong></div>
       <div class="summary__row"><span>Payment</span><strong>${escapeHtml(paymentLabelFor(booking.paymentMethod))}</strong></div>
     </div>
+
+    <p class="text-sm muted mt-3" style="max-width:520px; margin-inline:auto">
+      ${
+        booking.paymentMethod === "transfer"
+          ? "Our front desk will send the account details in the WhatsApp chat. Your room is held once payment is confirmed."
+          : "You can pay by cash, POS or transfer at the front desk when you arrive. We will hold the room for you."
+      }
+    </p>
 
     <div class="row" style="justify-content:center; margin-top:24px">
       <a class="btn btn--sm btn--accent" id="waBtn" href="${escapeHtml(waUrl)}" target="_blank" rel="noopener">${icon("chat")} Send booking on WhatsApp</a>

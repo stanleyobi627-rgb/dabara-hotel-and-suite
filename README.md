@@ -26,8 +26,8 @@ Built with **plain HTML, CSS and JavaScript** — no framework, no build step, n
 
 ## Highlights
 
-- Live availability — units are counted against overlapping reservations in real time
-- Four-step booking: stay details → guest details → payment → instant confirmation code
+- Availability checks against overlapping reservations (per-browser until a backend is added)
+- Four-step booking: stay details → guest details → payment preference → WhatsApp handoff with a reference code
 - Printable receipt, `.ics` calendar file and a one-tap WhatsApp message
 - Guest self-service area to print, re-book, cancel or restore a reservation
 - Staff dashboard: booking statuses, CSV export, full room catalogue editor, enquiries, hotel info
@@ -198,7 +198,7 @@ Then commit and publish. The room type filter, the total room count in the hero 
 
 ## Admin dashboard
 
-Open `admin.html` and enter the passcode. The demo passcode is `DABARA2026` and lives in `js/data.js` — **change it before going live**.
+Open `admin.html` and enter the passcode. The demo passcode is `DABARA2026` and lives in `js/data.js`. It is visible in the page source, so it is **not real security** — replace it with server-side authentication before storing real bookings.
 
 The dashboard covers:
 
@@ -254,7 +254,7 @@ Everything above lives in the `HOTEL`, `AMENITIES` and `SERVICES` objects in `js
 
 **Promotion codes** — `DABARA10` (10% off) · `WELCOME` (₦20,000 off) · `STAY3` (₦30,000 off)
 
-**Payment** — card, bank transfer, or pay at the property. The card form is a clearly labelled demo: nothing is charged and no card data leaves the browser. Final settlement happens at the front desk or via the secure link the hotel emails.
+**Payment** — bank transfer arranged on WhatsApp, or pay at the property by cash, card or POS. The website takes no payment and collects no card details. After confirming, the guest sends the booking and payment preference to the front desk on WhatsApp; the room is held once payment is confirmed.
 
 ---
 
@@ -296,7 +296,7 @@ Push the repository and point the host at the repository root — there is no bu
 ## Notes and limitations
 
 - **No backend.** Everything lives in the visitor's browser via `localStorage`. Bookings made on one device are not visible to the hotel, and clearing browser data removes them. A real deployment needs a server, a database and a payment processor.
-- **The payment form is a demonstration only.** No card is validated, tokenised or charged.
+- **No online payment is taken.** Bank transfers are arranged manually on WhatsApp and property payments are settled at the front desk. The site no longer collects card numbers or CVVs.
 - **The admin passcode is stored in a public file.** `js/data.js` is served to every visitor, so the passcode is a convenience, not security. Real staff access needs server-side authentication.
 - **Dashboard edits are per-browser.** They apply immediately across the site in that browser, but for every guest, publish `js/catalogue.js`.
 - **Room photos uploaded in the dashboard** are stored as data URLs in the browser only.

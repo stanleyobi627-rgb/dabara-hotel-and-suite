@@ -27,11 +27,6 @@ export const HOTEL = {
   currency: "₦",
   vatRate: 0.075,
   adminPasscode: "DABARA2026",
-  bank: {
-    bank: "Dabara Hotel and Suites",
-    account: "0123456789",
-    bankName: "Stanbic IBTC Bank",
-  },
   landmarks: [
     "Nnewi Flyover Junction — 3 min drive",
     "Nnewi Main Market, Nkwo — 5 min drive",
@@ -287,7 +282,7 @@ export const FAQ = [
   },
   {
     q: "Do you accept card payments?",
-    a: "Yes. You can pay by card, by bank transfer, or simply pay at the property when you arrive. Card details entered on this site are for a demo reservation and are never charged — the hotel takes final payment at the front desk or via the link we send you.",
+    a: "Yes. You can pay by bank transfer or by card, cash or POS at the property when you arrive. This website does not take payment or card details — after you book, send the details to our front desk on WhatsApp and we will share the transfer account details or take payment at check-in.",
   },
   {
     q: "Is breakfast included in the room rate?",

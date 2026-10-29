@@ -6,7 +6,7 @@
     <title>Book a room — Dabara Hotel and Suites</title>
     <meta
       name="description"
-      content="Reserve a room or suite at Dabara Hotel and Suites in Nnewi. Live availability, instant confirmation and flexible payment."
+      content="Reserve a room or suite at Dabara Hotel and Suites in Nnewi. Send your booking request to our front desk on WhatsApp and pay by transfer or on arrival."
     />
     <meta name="theme-color" content="#faf7f1" />
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
@@ -25,8 +25,8 @@
           </nav>
           <h1>Reserve your stay</h1>
           <p>
-            Three short steps: choose your room and dates, tell us who is coming, then pay by
-            card, transfer or at the property. You will get a confirmation code straight away.
+            Three short steps: choose your room and dates, tell us who is coming, then send the
+            booking to our front desk on WhatsApp. No payment is taken on this website.
           </p>
         </div>
       </section>
@@ -178,51 +178,22 @@
 
               <!-- Step 3 -->
               <section class="panel" data-panel="3" hidden>
-                <h2 class="panel__title">Payment</h2>
+                <h2 class="panel__title">How would you like to pay?</h2>
                 <div class="alert alert--info mb-3">
                   <span id="demo-icon"></span>
                   <span>
-                    <b>Demo checkout.</b> This site demonstrates the booking flow — no real card
-                    is charged and no payment details leave your browser. Final payment is taken
-                    at the front desk or via the secure link we email you.
+                    <b>No payment is taken on this website.</b> After you confirm, the booking
+                    opens in WhatsApp so you can send it to our front desk. For a bank transfer,
+                    we will reply with the account details in the chat; your room is held once
+                    payment is confirmed.
                   </span>
                 </div>
 
                 <label class="pay-option">
-                  <input type="radio" name="payment" value="card" checked />
+                  <input type="radio" name="payment" value="transfer" checked />
                   <span>
-                    <b>Pay by card</b>
-                    <span>Visa, Mastercard or Verve — charged at the property on arrival.</span>
-                  </span>
-                </label>
-                <div id="cardFields">
-                  <div class="field-row">
-                    <label class="field">
-                      <span class="field__label">Card number</span>
-                      <input class="input" type="text" id="cardNumber" inputmode="numeric" placeholder="4242 4242 4242 4242" maxlength="19" />
-                    </label>
-                    <label class="field">
-                      <span class="field__label">Name on card</span>
-                      <input class="input" type="text" id="cardName" placeholder="As printed on the card" />
-                    </label>
-                  </div>
-                  <div class="field-row">
-                    <label class="field">
-                      <span class="field__label">Expiry</span>
-                      <input class="input" type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" />
-                    </label>
-                    <label class="field">
-                      <span class="field__label">CVV</span>
-                      <input class="input" type="text" id="cardCvv" inputmode="numeric" placeholder="123" maxlength="4" />
-                    </label>
-                  </div>
-                </div>
-
-                <label class="pay-option">
-                  <input type="radio" name="payment" value="transfer" />
-                  <span>
-                    <b>Bank transfer</b>
-                    <span id="bankDetails"></span>
+                    <b>Bank transfer (arrange on WhatsApp)</b>
+                    <span>Send the booking message and our front desk will share the account details in the chat.</span>
                   </span>
                 </label>
 
